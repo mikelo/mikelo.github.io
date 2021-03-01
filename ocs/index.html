@@ -737,7 +737,7 @@ RHCOS=$(aws ec2 describe-images --filters "Name=name,Values=rhcos-4*" --query 's
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">curl -s https://raw.githubusercontent.com/mikelo/ocs-training/master/training/modules/ocs4/attachments/cluster-workerocs-eu-central-1-infra.yaml | sed -e "s/CLUSTERID/${CLUSTERID}/g" | sed -e "s/RHCOS/${RHCOS}/g" | oc apply -f -</code></pre>
+<pre class="pygments highlight"><code data-lang="shell">curl -s https://raw.githubusercontent.com/mikelo/mikelo.github.io/master/ocs/cluster-workerocs-eu-central-1-infra.yaml | sed -e "s/CLUSTERID/${CLUSTERID}/g" | sed -e "s/RHCOS/${RHCOS}/g" | oc apply -f -</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1357,7 +1357,7 @@ POOLS:
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc apply -f https://raw.githubusercontent.com/mikelo/ocs-training/master/training/modules/ocs4/attachments/cluster-monitoring-configmap.storage.yaml</code></pre>
+<pre class="pygments highlight"><code data-lang="shell">oc apply -f https://raw.githubusercontent.com/mikelo/mikelo.github.io/master/ocs/cluster-monitoring-configmap.storage.yaml</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1445,7 +1445,7 @@ persistent storage.</p>
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc apply -f https://raw.githubusercontent.com/mikelo/ocs-training/master/training/modules/ocs4/attachments/OCS-FS-STS.yaml</code></pre>
+<pre class="pygments highlight"><code data-lang="shell">oc apply -f https://raw.githubusercontent.com/mikelo/mikelo.github.io/master/ocs/OCS-FS-STS.yaml</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1576,7 +1576,7 @@ POOLS:
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-03-01 15:33:12 +0100
+Last updated 2021-03-01 16:07:10 +0100
 </div>
 </div>
 </body>
