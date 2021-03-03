@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>End-to-end infra node installation of OCS on an OCP cluster</title>
+<title>End-to-end infra node installation of OCS on OCP</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -438,7 +438,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>End-to-end infra node installation of OCS on an OCP cluster</h1>
+<h1>End-to-end infra node installation of OCS on OCP</h1>
 </div>
 <div id="content">
 <div class="sect1">
@@ -477,14 +477,14 @@ We explicitly install the OCS part directly on infrastructure nodes, this will l
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">export AWS_PROFILE=[your AWS username goes here]
+<pre class="pygments highlight"><code data-lang="shell"><span></span><span class="tok-nb">export</span> <span class="tok-nv">AWS_PROFILE</span><span class="tok-o">=[</span>your AWS username goes here<span class="tok-o">]</span>
 aws configure get region</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">eu-central-1</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>eu-central-1</code></pre>
 </div>
 </div>
 </div>
@@ -492,14 +492,14 @@ aws configure get region</code></pre>
 <h3 id="_create_your_install_config_yaml">2.2. Create your install-config.yaml</h3>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">openshift-install create install-config --log-level info</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>openshift-install create install-config --log-level info</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">? SSH Public Key &lt;none&gt;
-? Platform  [Use arrows to move, enter to select, type to filter, ? for more help]
+<pre class="pygments highlight"><code data-lang="shell"><span></span>? SSH Public Key &lt;none&gt;
+? Platform  <span class="tok-o">[</span>Use arrows to move, enter to <span class="tok-k">select</span>, <span class="tok-nb">type</span> to filter, ? <span class="tok-k">for</span> more help<span class="tok-o">]</span>
 &gt; aws
   azure
   gcp
@@ -513,37 +513,37 @@ aws configure get region</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="yaml">apiVersion: v1
-baseDomain: example.com
-compute:
-- architecture: amd64
-  hyperthreading: Enabled
-  name: worker
-  platform: {}
-  replicas: 3
-controlPlane:
-  architecture: amd64
-  hyperthreading: Enabled
-  name: master
-  platform: {}
-  replicas: 3
-metadata:
-  creationTimestamp: null
-  name: CLUSTERID
-networking:
-  clusterNetwork:
-  - cidr: 10.128.0.0/14
-    hostPrefix: 23
-  machineNetwork:
-  - cidr: 10.0.0.0/16
-  networkType: OpenShiftSDN
-  serviceNetwork:
-  - 172.30.0.0/16
-platform:
-  aws:
-    region: eu-central-1
-publish: External
-pullSecret: '{"auths":{"cloud.openshift.com":{"auth":"...","email":"..."},"quay.io":{"auth":"...","email":"..."},"registry.connect.redhat.com":{"auth":"...","email":"..."},"registry.redhat.io":{"auth":"...","email":"..."}}}'</code></pre>
+<pre class="pygments highlight"><code data-lang="yaml"><span></span><span class="tok-nt">apiVersion</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">v1</span>
+<span class="tok-nt">baseDomain</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">example.com</span>
+<span class="tok-nt">compute</span><span class="tok-p">:</span>
+<span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">architecture</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">amd64</span>
+  <span class="tok-nt">hyperthreading</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">Enabled</span>
+  <span class="tok-nt">name</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">worker</span>
+  <span class="tok-nt">platform</span><span class="tok-p">:</span> <span class="tok-p tok-p-Indicator">{}</span>
+  <span class="tok-nt">replicas</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">3</span>
+<span class="tok-nt">controlPlane</span><span class="tok-p">:</span>
+  <span class="tok-nt">architecture</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">amd64</span>
+  <span class="tok-nt">hyperthreading</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">Enabled</span>
+  <span class="tok-nt">name</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">master</span>
+  <span class="tok-nt">platform</span><span class="tok-p">:</span> <span class="tok-p tok-p-Indicator">{}</span>
+  <span class="tok-nt">replicas</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">3</span>
+<span class="tok-nt">metadata</span><span class="tok-p">:</span>
+  <span class="tok-nt">creationTimestamp</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">null</span>
+  <span class="tok-nt">name</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">CLUSTERID</span>
+<span class="tok-nt">networking</span><span class="tok-p">:</span>
+  <span class="tok-nt">clusterNetwork</span><span class="tok-p">:</span>
+  <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">cidr</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">10.128.0.0/14</span>
+    <span class="tok-nt">hostPrefix</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">23</span>
+  <span class="tok-nt">machineNetwork</span><span class="tok-p">:</span>
+  <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">cidr</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">10.0.0.0/16</span>
+  <span class="tok-nt">networkType</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">OpenShiftSDN</span>
+  <span class="tok-nt">serviceNetwork</span><span class="tok-p">:</span>
+  <span class="tok-p tok-p-Indicator">-</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">172.30.0.0/16</span>
+<span class="tok-nt">platform</span><span class="tok-p">:</span>
+  <span class="tok-nt">aws</span><span class="tok-p">:</span>
+    <span class="tok-nt">region</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">eu-central-1</span>
+<span class="tok-nt">publish</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">External</span>
+<span class="tok-nt">pullSecret</span><span class="tok-p">:</span> <span class="tok-s">&#39;{&quot;auths&quot;:{&quot;cloud.openshift.com&quot;:{&quot;auth&quot;:&quot;...&quot;,&quot;email&quot;:&quot;...&quot;},&quot;quay.io&quot;:{&quot;auth&quot;:&quot;...&quot;,&quot;email&quot;:&quot;...&quot;},&quot;registry.connect.redhat.com&quot;:{&quot;auth&quot;:&quot;...&quot;,&quot;email&quot;:&quot;...&quot;},&quot;registry.redhat.io&quot;:{&quot;auth&quot;:&quot;...&quot;,&quot;email&quot;:&quot;...&quot;}}}&#39;</span></code></pre>
 </div>
 </div>
 </div>
@@ -554,7 +554,7 @@ pullSecret: '{"auths":{"cloud.openshift.com":{"auth":"...","email":"..."},"quay.
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">cp install-config.yaml install-config.default.yaml</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>cp install-config.yaml install-config.default.yaml</code></pre>
 </div>
 </div>
 <div class="admonitionblock warning">
@@ -574,13 +574,13 @@ openshift-install will remove this file when the installation starts
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">openshift-install create cluster --log-level debug</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>openshift-install create cluster --log-level debug</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">DEBUG OpenShift Installer 4.6.16
+<pre class="pygments highlight"><code data-lang="shell"><span></span>DEBUG OpenShift Installer <span class="tok-m">4</span>.6.16
 DEBUG Built from commit 8a1ec01353e68cb6ebb1dd890d684f885c33145a
 DEBUG Fetching Metadata...
 DEBUG Loading Metadata...
@@ -602,18 +602,18 @@ DEBUG   Loading Cluster ID...
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">...
-DEBUG Still waiting for the cluster to initialize: Cluster operator authentication is reporting a failure: WellKnownReadyControllerDegraded: kube-apiserver oauth endpoint https://10.0.140.185:6443/.well-known/oauth-authorization-server is not yet served and authentication operator keeps waiting (check kube-apiserver operator, and check that instances roll out successfully, which can take several minutes per instance)
-DEBUG Still waiting for the cluster to initialize: Cluster operator authentication is reporting a failure: WellKnownReadyControllerDegraded: need at least 3 kube-apiservers, got 2
+<pre class="pygments highlight"><code data-lang="shell"><span></span>...
+DEBUG Still waiting <span class="tok-k">for</span> the cluster to initialize: Cluster operator authentication is reporting a failure: WellKnownReadyControllerDegraded: kube-apiserver oauth endpoint https://10.0.140.185:6443/.well-known/oauth-authorization-server is not yet served and authentication operator keeps waiting <span class="tok-o">(</span>check kube-apiserver operator, and check that instances roll out successfully, which can take several minutes per instance<span class="tok-o">)</span>
+DEBUG Still waiting <span class="tok-k">for</span> the cluster to initialize: Cluster operator authentication is reporting a failure: WellKnownReadyControllerDegraded: need at least <span class="tok-m">3</span> kube-apiservers, got <span class="tok-m">2</span>
 DEBUG Cluster is initialized
-INFO Waiting up to 10m0s for the openshift-console route to be created...
-DEBUG Route found in openshift-console namespace: console
-DEBUG Route found in openshift-console namespace: downloads
+INFO Waiting up to 10m0s <span class="tok-k">for</span> the openshift-console route to be created...
+DEBUG Route found <span class="tok-k">in</span> openshift-console namespace: console
+DEBUG Route found <span class="tok-k">in</span> openshift-console namespace: downloads
 DEBUG OpenShift console route is created
 INFO Install complete!
-INFO To access the cluster as the system:admin user when using 'oc', run 'export KUBECONFIG=/home/$USER/install/auth/kubeconfig'
+INFO To access the cluster as the system:admin user when using <span class="tok-s1">&#39;oc&#39;</span>, run <span class="tok-s1">&#39;export KUBECONFIG=/home/$USER/install/auth/kubeconfig&#39;</span>
 INFO Access the OpenShift web-console here: https://console-openshift-console.apps.CLUSTERID.example.com
-INFO Login to the console with user: "kubeadmin", and password: "***********"
+INFO Login to the console with user: <span class="tok-s2">&quot;kubeadmin&quot;</span>, and password: <span class="tok-s2">&quot;***********&quot;</span>
 DEBUG Time elapsed per stage:
 DEBUG     Infrastructure: 7m4s
 DEBUG Bootstrap Complete: 9m59s
@@ -628,44 +628,44 @@ INFO Time elapsed: 34m58s</code></pre>
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">export KUBECONFIG=/home/$USER/install/auth/kubeconfig
+<pre class="pygments highlight"><code data-lang="shell"><span></span><span class="tok-nb">export</span> <span class="tok-nv">KUBECONFIG</span><span class="tok-o">=</span>/home/<span class="tok-nv">$USER</span>/install/auth/kubeconfig
 oc get co</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output in case of successful installation:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">NAME                                       VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE
-authentication                             4.6.16    True 	     False         False	  2m59s
-cloud-credential                           4.6.16    True        False         False	  29m
-cluster-autoscaler                         4.6.16    True        False         False	  22m
-config-operator                            4.6.16    True        False         False	  23m
-console                                    4.6.16    True        False         False	  12m
-csi-snapshot-controller                    4.6.16    True        False         False	  23m
-dns                                        4.6.16    True        False         False	  22m
-etcd                                       4.6.16    True        False         False	  22m
-image-registry                             4.6.16    True        False         False	  17m
-ingress                                    4.6.16    True        False         False	  16m
-insights                                   4.6.16    True        False         False	  23m
-kube-apiserver                             4.6.16    True        False         False	  21m
-kube-controller-manager                    4.6.16    True        False         False	  21m
-kube-scheduler                             4.6.16    True        False         False	  20m
-kube-storage-version-migrator              4.6.16    True        False         False	  16m
-machine-api                                4.6.16    True        False         False	  17m
-machine-approver                           4.6.16    True        False         False	  23m
-machine-config                             4.6.16    True        False         False	  21m
-marketplace                                4.6.16    True        False         False	  22m
-monitoring                                 4.6.16    True        False         False	  15m
-network                                    4.6.16    True        False         False	  24m
-node-tuning                                4.6.16    True        False         False	  23m
-openshift-apiserver                        4.6.16    True        False         False	  18m
-openshift-controller-manager               4.6.16    True        False         False	  22m
-openshift-samples                          4.6.16    True        False         False	  17m
-operator-lifecycle-manager                 4.6.16    True        False         False	  22m
-operator-lifecycle-manager-catalog         4.6.16    True        False         False	  22m
-operator-lifecycle-manager-packageserver   4.6.16    True        False         False	  18m
-service-ca                                 4.6.16    True        False         False	  23m
-storage                                    4.6.16    True        False         False	  23m</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>NAME                                       VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE
+authentication                             <span class="tok-m">4</span>.6.16    True 	     False         False	  2m59s
+cloud-credential                           <span class="tok-m">4</span>.6.16    True        False         False	  29m
+cluster-autoscaler                         <span class="tok-m">4</span>.6.16    True        False         False	  22m
+config-operator                            <span class="tok-m">4</span>.6.16    True        False         False	  23m
+console                                    <span class="tok-m">4</span>.6.16    True        False         False	  12m
+csi-snapshot-controller                    <span class="tok-m">4</span>.6.16    True        False         False	  23m
+dns                                        <span class="tok-m">4</span>.6.16    True        False         False	  22m
+etcd                                       <span class="tok-m">4</span>.6.16    True        False         False	  22m
+image-registry                             <span class="tok-m">4</span>.6.16    True        False         False	  17m
+ingress                                    <span class="tok-m">4</span>.6.16    True        False         False	  16m
+insights                                   <span class="tok-m">4</span>.6.16    True        False         False	  23m
+kube-apiserver                             <span class="tok-m">4</span>.6.16    True        False         False	  21m
+kube-controller-manager                    <span class="tok-m">4</span>.6.16    True        False         False	  21m
+kube-scheduler                             <span class="tok-m">4</span>.6.16    True        False         False	  20m
+kube-storage-version-migrator              <span class="tok-m">4</span>.6.16    True        False         False	  16m
+machine-api                                <span class="tok-m">4</span>.6.16    True        False         False	  17m
+machine-approver                           <span class="tok-m">4</span>.6.16    True        False         False	  23m
+machine-config                             <span class="tok-m">4</span>.6.16    True        False         False	  21m
+marketplace                                <span class="tok-m">4</span>.6.16    True        False         False	  22m
+monitoring                                 <span class="tok-m">4</span>.6.16    True        False         False	  15m
+network                                    <span class="tok-m">4</span>.6.16    True        False         False	  24m
+node-tuning                                <span class="tok-m">4</span>.6.16    True        False         False	  23m
+openshift-apiserver                        <span class="tok-m">4</span>.6.16    True        False         False	  18m
+openshift-controller-manager               <span class="tok-m">4</span>.6.16    True        False         False	  22m
+openshift-samples                          <span class="tok-m">4</span>.6.16    True        False         False	  17m
+operator-lifecycle-manager                 <span class="tok-m">4</span>.6.16    True        False         False	  22m
+operator-lifecycle-manager-catalog         <span class="tok-m">4</span>.6.16    True        False         False	  22m
+operator-lifecycle-manager-packageserver   <span class="tok-m">4</span>.6.16    True        False         False	  18m
+service-ca                                 <span class="tok-m">4</span>.6.16    True        False         False	  23m
+storage                                    <span class="tok-m">4</span>.6.16    True        False         False	  23m</code></pre>
 </div>
 </div>
 </div>
@@ -683,13 +683,13 @@ resources. The <code>NAME</code> of your OCP nodes will be different than shown 
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc get nodes -l node-role.kubernetes.io/worker -l '!node-role.kubernetes.io/master'</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc get nodes -l node-role.kubernetes.io/worker -l <span class="tok-s1">&#39;!node-role.kubernetes.io/master&#39;</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">NAME                                            STATUS   ROLES    AGE   VERSION
+<pre class="pygments highlight"><code data-lang="shell"><span></span>NAME                                            STATUS   ROLES    AGE   VERSION
 ip-10-0-129-119.eu-central-1.compute.internal   Ready    worker   17m   v1.19.0+e49167a
 ip-10-0-185-158.eu-central-1.compute.internal   Ready    worker   20m   v1.19.0+e49167a
 ip-10-0-209-48.eu-central-1.compute.internal    Ready    worker   17m   v1.19.0+e49167a</code></pre>
@@ -700,7 +700,7 @@ ip-10-0-209-48.eu-central-1.compute.internal    Ready    worker   17m   v1.19.0+
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc get machinesets -n openshift-machine-api</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc get machinesets -n openshift-machine-api</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -713,10 +713,10 @@ machines (i.e., DESIRED=0) created.</p>
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">NAME                                    DESIRED   CURRENT   READY   AVAILABLE   AGE
-CLUSTERID-ltkvj-worker-eu-central-1a   1         1         1       1           32m
-CLUSTERID-ltkvj-worker-eu-central-1b   1         1         1       1           32m
-CLUSTERID-ltkvj-worker-eu-central-1c   1         1         1       1           32m</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>NAME                                    DESIRED   CURRENT   READY   AVAILABLE   AGE
+CLUSTERID-ltkvj-worker-eu-central-1a   <span class="tok-m">1</span>         <span class="tok-m">1</span>         <span class="tok-m">1</span>       <span class="tok-m">1</span>           32m
+CLUSTERID-ltkvj-worker-eu-central-1b   <span class="tok-m">1</span>         <span class="tok-m">1</span>         <span class="tok-m">1</span>       <span class="tok-m">1</span>           32m
+CLUSTERID-ltkvj-worker-eu-central-1c   <span class="tok-m">1</span>         <span class="tok-m">1</span>         <span class="tok-m">1</span>       <span class="tok-m">1</span>           32m</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -728,8 +728,8 @@ your OCP cluster in the AWS AZs:</p>
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">CLUSTERID=$(oc get machineset -n openshift-machine-api -o jsonpath='{.items[0].metadata.labels.machine\.openshift\.io/cluster-api-cluster}')
-RHCOS=$(aws ec2 describe-images --filters "Name=name,Values=rhcos-4*" --query 'sort_by(Images, &amp;CreationDate)[-1].ImageId' --output text)</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span><span class="tok-nv">CLUSTERID</span><span class="tok-o">=</span><span class="tok-k">$(</span>oc get machineset -n openshift-machine-api -o <span class="tok-nv">jsonpath</span><span class="tok-o">=</span><span class="tok-s1">&#39;{.items[0].metadata.labels.machine\.openshift\.io/cluster-api-cluster}&#39;</span><span class="tok-k">)</span>
+<span class="tok-nv">RHCOS</span><span class="tok-o">=</span><span class="tok-k">$(</span>aws ec2 describe-images --filters <span class="tok-s2">&quot;Name=name,Values=rhcos-4*&quot;</span> --query <span class="tok-s1">&#39;sort_by(Images, &amp;CreationDate)[-1].ImageId&#39;</span> --output text<span class="tok-k">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -737,7 +737,7 @@ RHCOS=$(aws ec2 describe-images --filters "Name=name,Values=rhcos-4*" --query 's
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">curl -s https://raw.githubusercontent.com/mikelo/mikelo.github.io/master/ocs/cluster-workerocs-eu-central-1-infra.yaml | sed -e "s/CLUSTERID/${CLUSTERID}/g" | sed -e "s/RHCOS/${RHCOS}/g" | oc apply -f -</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>curl -s https://raw.githubusercontent.com/mikelo/mikelo.github.io/master/ocs/cluster-workerocs-eu-central-1-infra.yaml <span class="tok-p">|</span> sed -e <span class="tok-s2">&quot;s/CLUSTERID/</span><span class="tok-si">${</span><span class="tok-nv">CLUSTERID</span><span class="tok-si">}</span><span class="tok-s2">/g&quot;</span> <span class="tok-p">|</span> sed -e <span class="tok-s2">&quot;s/RHCOS/</span><span class="tok-si">${</span><span class="tok-nv">RHCOS</span><span class="tok-si">}</span><span class="tok-s2">/g&quot;</span> <span class="tok-p">|</span> oc apply -f -</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -745,16 +745,16 @@ RHCOS=$(aws ec2 describe-images --filters "Name=name,Values=rhcos-4*" --query 's
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc get machines -n openshift-machine-api | egrep 'NAME|workerocs'</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc get machines -n openshift-machine-api <span class="tok-p">|</span> egrep <span class="tok-s1">&#39;NAME|workerocs&#39;</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">NAME                                             PHASE     TYPE         REGION         ZONE            AGE
-$CLUSTERID-ltkvj-workerocs-eu-central-1a-7lrkm   Running   m5.4xlarge   eu-central-1   eu-central-1a   6m26s
-$CLUSTERID-ltkvj-workerocs-eu-central-1b-jzsnz   Running   m5.4xlarge   eu-central-1   eu-central-1b   6m26s
-$CLUSTERID-ltkvj-workerocs-eu-central-1c-hkj8n   Running   m5.4xlarge   eu-central-1   eu-central-1c   6m26s</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>NAME                                             PHASE     TYPE         REGION         ZONE            AGE
+<span class="tok-nv">$CLUSTERID</span>-ltkvj-workerocs-eu-central-1a-7lrkm   Running   m5.4xlarge   eu-central-1   eu-central-1a   6m26s
+<span class="tok-nv">$CLUSTERID</span>-ltkvj-workerocs-eu-central-1b-jzsnz   Running   m5.4xlarge   eu-central-1   eu-central-1b   6m26s
+<span class="tok-nv">$CLUSTERID</span>-ltkvj-workerocs-eu-central-1c-hkj8n   Running   m5.4xlarge   eu-central-1   eu-central-1c   6m26s</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -766,16 +766,16 @@ NOTE: workerocs <strong>machines</strong> are using the AWS EC2 instance type <c
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc get machinesets -n openshift-machine-api | egrep 'NAME|workerocs'</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc get machinesets -n openshift-machine-api <span class="tok-p">|</span> egrep <span class="tok-s1">&#39;NAME|workerocs&#39;</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">NAME                                       DESIRED   CURRENT   READY   AVAILABLE   AGE
-$CLUSTERID-ltkvj-workerocs-eu-central-1a   1         1         1       1           7m22s
-$CLUSTERID-ltkvj-workerocs-eu-central-1b   1         1         1       1           7m22s
-$CLUSTERID-ltkvj-workerocs-eu-central-1c   1         1         1       1           7m22s</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>NAME                                       DESIRED   CURRENT   READY   AVAILABLE   AGE
+<span class="tok-nv">$CLUSTERID</span>-ltkvj-workerocs-eu-central-1a   <span class="tok-m">1</span>         <span class="tok-m">1</span>         <span class="tok-m">1</span>       <span class="tok-m">1</span>           7m22s
+<span class="tok-nv">$CLUSTERID</span>-ltkvj-workerocs-eu-central-1b   <span class="tok-m">1</span>         <span class="tok-m">1</span>         <span class="tok-m">1</span>       <span class="tok-m">1</span>           7m22s
+<span class="tok-nv">$CLUSTERID</span>-ltkvj-workerocs-eu-central-1c   <span class="tok-m">1</span>         <span class="tok-m">1</span>         <span class="tok-m">1</span>       <span class="tok-m">1</span>           7m22s</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -783,13 +783,13 @@ $CLUSTERID-ltkvj-workerocs-eu-central-1c   1         1         1       1        
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc get nodes -l node-role.kubernetes.io/worker -l '!node-role.kubernetes.io/master'</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc get nodes -l node-role.kubernetes.io/worker -l <span class="tok-s1">&#39;!node-role.kubernetes.io/master&#39;</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">NAME                                            STATUS   ROLES          AGE     VERSION
+<pre class="pygments highlight"><code data-lang="shell"><span></span>NAME                                            STATUS   ROLES          AGE     VERSION
 ip-10-0-129-119.eu-central-1.compute.internal   Ready    worker         45m     v1.19.0+e49167a
 ip-10-0-138-77.eu-central-1.compute.internal    Ready    infra,worker   3m17s   v1.19.0+e49167a
 ip-10-0-181-225.eu-central-1.compute.internal   Ready    infra,worker   3m16s   v1.19.0+e49167a
@@ -823,7 +823,7 @@ OCS 4 using the OCS Operator in OperatorHub. The following will be installed:</p
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc create namespace openshift-storage</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc create namespace openshift-storage</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -833,7 +833,7 @@ prometheus metrics and alerts for the OCP storage dashboards. To label the
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc label namespace openshift-storage "openshift.io/cluster-monitoring=true"</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc label namespace openshift-storage <span class="tok-s2">&quot;openshift.io/cluster-monitoring=true&quot;</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -895,14 +895,14 @@ installation.</p>
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc -n openshift-storage get csv</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc -n openshift-storage get csv</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">NAME                  DISPLAY                       VERSION   REPLACES   PHASE
-ocs-operator.v4.6.0   OpenShift Container Storage   4.6.0                Succeeded</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>NAME                  DISPLAY                       VERSION   REPLACES   PHASE
+ocs-operator.v4.6.0   OpenShift Container Storage   <span class="tok-m">4</span>.6.0                Succeeded</code></pre>
 </div>
 </div>
 <div class="admonitionblock caution">
@@ -923,17 +923,17 @@ This will mark that the installation of your operator was successful. Reaching t
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc -n openshift-storage get pods</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc -n openshift-storage get pods</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">NAME                                    READY   STATUS    RESTARTS   AGE
-noobaa-operator-88798865f-hlwtt         1/1     Running   0          6m57s
-ocs-metrics-exporter-5495fd48b9-xzxpm   1/1     Running   0          6m57s
-ocs-operator-6fcc5f798f-gdkrx           1/1     Running   0          6m57s
-rook-ceph-operator-8659478f5-qhghs      1/1     Running   0          6m57s</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>NAME                                    READY   STATUS    RESTARTS   AGE
+noobaa-operator-88798865f-hlwtt         <span class="tok-m">1</span>/1     Running   <span class="tok-m">0</span>          6m57s
+ocs-metrics-exporter-5495fd48b9-xzxpm   <span class="tok-m">1</span>/1     Running   <span class="tok-m">0</span>          6m57s
+ocs-operator-6fcc5f798f-gdkrx           <span class="tok-m">1</span>/1     Running   <span class="tok-m">0</span>          6m57s
+rook-ceph-operator-8659478f5-qhghs      <span class="tok-m">1</span>/1     Running   <span class="tok-m">0</span>          6m57s</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -991,7 +991,7 @@ selected.</p>
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc get nodes --show-labels | grep ocs |cut -d' ' -f1</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc get nodes --show-labels <span class="tok-p">|</span> grep ocs <span class="tok-p">|</span>cut -d<span class="tok-s1">&#39; &#39;</span> -f1</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1015,91 +1015,91 @@ see all instances shown below as <code>Ready</code> Status in the Web Console as
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc -n openshift-storage get pods</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc -n openshift-storage get pods</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Output when the cluster installation is finished</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">NAME                                                              READY   STATUS      RESTART
+<pre class="pygments highlight"><code data-lang="shell"><span></span>NAME                                                              READY   STATUS      RESTART
 S   AGE
-csi-cephfsplugin-875xd                                            3/3     Running     0
+csi-cephfsplugin-875xd                                            <span class="tok-m">3</span>/3     Running     <span class="tok-m">0</span>
     23m
-csi-cephfsplugin-bncsj                                            3/3     Running     0
+csi-cephfsplugin-bncsj                                            <span class="tok-m">3</span>/3     Running     <span class="tok-m">0</span>
     23m
-csi-cephfsplugin-hjv77                                            3/3     Running     0
+csi-cephfsplugin-hjv77                                            <span class="tok-m">3</span>/3     Running     <span class="tok-m">0</span>
     23m
-csi-cephfsplugin-lch4m                                            3/3     Running     0
+csi-cephfsplugin-lch4m                                            <span class="tok-m">3</span>/3     Running     <span class="tok-m">0</span>
     23m
-csi-cephfsplugin-provisioner-6cfdc4bfbb-cklxs                     6/6     Running     0
+csi-cephfsplugin-provisioner-6cfdc4bfbb-cklxs                     <span class="tok-m">6</span>/6     Running     <span class="tok-m">0</span>
     23m
-csi-cephfsplugin-provisioner-6cfdc4bfbb-krkq5                     6/6     Running     0
+csi-cephfsplugin-provisioner-6cfdc4bfbb-krkq5                     <span class="tok-m">6</span>/6     Running     <span class="tok-m">0</span>
     23m
-csi-cephfsplugin-wtp4v                                            3/3     Running     0
+csi-cephfsplugin-wtp4v                                            <span class="tok-m">3</span>/3     Running     <span class="tok-m">0</span>
     23m
-csi-rbdplugin-7clqf                                               3/3     Running     0
+csi-rbdplugin-7clqf                                               <span class="tok-m">3</span>/3     Running     <span class="tok-m">0</span>
     23m
-csi-rbdplugin-8nllt                                               3/3     Running     0
+csi-rbdplugin-8nllt                                               <span class="tok-m">3</span>/3     Running     <span class="tok-m">0</span>
     23m
-csi-rbdplugin-d267h                                               3/3     Running     0
+csi-rbdplugin-d267h                                               <span class="tok-m">3</span>/3     Running     <span class="tok-m">0</span>
     23m
-csi-rbdplugin-provisioner-b46dd5c7-vd58q                          6/6     Running     0
+csi-rbdplugin-provisioner-b46dd5c7-vd58q                          <span class="tok-m">6</span>/6     Running     <span class="tok-m">0</span>
     23m
-csi-rbdplugin-provisioner-b46dd5c7-z8mx6                          6/6     Running     0
+csi-rbdplugin-provisioner-b46dd5c7-z8mx6                          <span class="tok-m">6</span>/6     Running     <span class="tok-m">0</span>
     23m
-csi-rbdplugin-tdj8f                                               3/3     Running     0
+csi-rbdplugin-tdj8f                                               <span class="tok-m">3</span>/3     Running     <span class="tok-m">0</span>
     23m
-csi-rbdplugin-wp65b                                               3/3     Running     0
+csi-rbdplugin-wp65b                                               <span class="tok-m">3</span>/3     Running     <span class="tok-m">0</span>
     23m
-noobaa-core-0                                                     1/1     Running     0
+noobaa-core-0                                                     <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     19m
-noobaa-db-0                                                       1/1     Running     0
+noobaa-db-0                                                       <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     19m
-noobaa-endpoint-86cc5df669-ffqj2                                  1/1     Running     0
+noobaa-endpoint-86cc5df669-ffqj2                                  <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     16m
-noobaa-operator-698746cd47-sp6w9                                  1/1     Running     0
+noobaa-operator-698746cd47-sp6w9                                  <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     17h
-ocs-metrics-exporter-78bc44687-pg4hk                              1/1     Running     0
+ocs-metrics-exporter-78bc44687-pg4hk                              <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     17h
-ocs-operator-6d99bc6787-d7m9d                                     1/1     Running     0
+ocs-operator-6d99bc6787-d7m9d                                     <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     17h
-rook-ceph-crashcollector-ip-10-0-147-230-7cbf854757-chlgs         1/1     Running     0
+rook-ceph-crashcollector-ip-10-0-147-230-7cbf854757-chlgs         <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     20m
-rook-ceph-crashcollector-ip-10-0-175-8-5779d5d5df-p6hkl           1/1     Running     0
+rook-ceph-crashcollector-ip-10-0-175-8-5779d5d5df-p6hkl           <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     21m
-rook-ceph-crashcollector-ip-10-0-209-53-7ccc4cc785-wjxzd          1/1     Running     0
+rook-ceph-crashcollector-ip-10-0-209-53-7ccc4cc785-wjxzd          <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     21m
-rook-ceph-drain-canary-128c383c26627b938ab0fd7f47f58d33-665pbsg   1/1     Running     0
+rook-ceph-drain-canary-128c383c26627b938ab0fd7f47f58d33-665pbsg   <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     19m
-rook-ceph-drain-canary-84c954eec459013180f78efd0a35792c-7b6qdnj   1/1     Running     0
+rook-ceph-drain-canary-84c954eec459013180f78efd0a35792c-7b6qdnj   <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     19m
-rook-ceph-drain-canary-ip-10-0-175-8.eu-central-1.compute.intrh526   1/1     Running     0
+rook-ceph-drain-canary-ip-10-0-175-8.eu-central-1.compute.intrh526   <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     19m
-rook-ceph-mds-ocs-storagecluster-cephfilesystem-a-756df8b4kp9kr   1/1     Running     0
+rook-ceph-mds-ocs-storagecluster-cephfilesystem-a-756df8b4kp9kr   <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     18m
-rook-ceph-mds-ocs-storagecluster-cephfilesystem-b-64585764bbg6b   1/1     Running     0
+rook-ceph-mds-ocs-storagecluster-cephfilesystem-b-64585764bbg6b   <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     18m
-rook-ceph-mgr-a-5c74bb4b85-5x26g                                  1/1     Running     0
+rook-ceph-mgr-a-5c74bb4b85-5x26g                                  <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     20m
-rook-ceph-mon-a-746b5457c-hlh7n                                   1/1     Running     0
+rook-ceph-mon-a-746b5457c-hlh7n                                   <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     21m
-rook-ceph-mon-b-754b99cfd-xs9g4                                   1/1     Running     0
+rook-ceph-mon-b-754b99cfd-xs9g4                                   <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     21m
-rook-ceph-mon-c-7474d96f55-qhhb6                                  1/1     Running     0
+rook-ceph-mon-c-7474d96f55-qhhb6                                  <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     20m
-rook-ceph-operator-59f7fb95d6-sdjd8                               1/1     Running     0
+rook-ceph-operator-59f7fb95d6-sdjd8                               <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     17h
-rook-ceph-osd-0-7d45696497-jwgb7                                  1/1     Running     0
+rook-ceph-osd-0-7d45696497-jwgb7                                  <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     19m
-rook-ceph-osd-1-6f49b665c7-gxq75                                  1/1     Running     0
+rook-ceph-osd-1-6f49b665c7-gxq75                                  <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     19m
-rook-ceph-osd-2-76ffc64cd-9zg65                                   1/1     Running     0
+rook-ceph-osd-2-76ffc64cd-9zg65                                   <span class="tok-m">1</span>/1     Running     <span class="tok-m">0</span>
     19m
-rook-ceph-osd-prepare-ocs-deviceset-gp2-0-data-0-9977n-49ngd      0/1     Completed   0
+rook-ceph-osd-prepare-ocs-deviceset-gp2-0-data-0-9977n-49ngd      <span class="tok-m">0</span>/1     Completed   <span class="tok-m">0</span>
     20m
-rook-ceph-osd-prepare-ocs-deviceset-gp2-1-data-0-nnmpv-z8vq6      0/1     Completed   0
+rook-ceph-osd-prepare-ocs-deviceset-gp2-1-data-0-nnmpv-z8vq6      <span class="tok-m">0</span>/1     Completed   <span class="tok-m">0</span>
     20m
-rook-ceph-osd-prepare-ocs-deviceset-gp2-2-data-0-mtbtj-xrj2n      0/1     Completed   0
+rook-ceph-osd-prepare-ocs-deviceset-gp2-2-data-0-mtbtj-xrj2n      <span class="tok-m">0</span>/1     Completed   <span class="tok-m">0</span>
     20m</code></pre>
 </div>
 </div>
@@ -1113,25 +1113,26 @@ created:</p>
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc get storagecluster -n openshift-storage</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc get storagecluster -n openshift-storage</code></pre>
 </div>
 </div>
-<hr>
-<div class="paragraph">
-<p>NAME                          PROVISIONER                             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
-gp2 (default)                 kubernetes.io/aws-ebs                   Delete          WaitForFirstConsumer   true                   107m
-gp2-csi                       ebs.csi.aws.com                         Delete          WaitForFirstConsumer   true                   107m
-ocs-storagecluster-ceph-rbd   openshift-storage.rbd.csi.ceph.com      Delete          Immediate              true                   40m
-ocs-storagecluster-cephfs     openshift-storage.cephfs.csi.ceph.com   Delete          Immediate              true                   40m
-openshift-storage.noobaa.io   openshift-storage.noobaa.io/obc         Delete          Immediate              false                  34m
----</p>
+<div class="listingblock">
+<div class="title">Output when the cluster installation is finished</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="shell"><span></span>NAME                          PROVISIONER                             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+gp2 <span class="tok-o">(</span>default<span class="tok-o">)</span>                 kubernetes.io/aws-ebs                   Delete          WaitForFirstConsumer   <span class="tok-nb">true</span>                   107m
+gp2-csi                       ebs.csi.aws.com                         Delete          WaitForFirstConsumer   <span class="tok-nb">true</span>                   107m
+ocs-storagecluster-ceph-rbd   openshift-storage.rbd.csi.ceph.com      Delete          Immediate              <span class="tok-nb">true</span>                   40m
+ocs-storagecluster-cephfs     openshift-storage.cephfs.csi.ceph.com   Delete          Immediate              <span class="tok-nb">true</span>                   40m
+openshift-storage.noobaa.io   openshift-storage.noobaa.io/obc         Delete          Immediate              <span class="tok-nb">false</span>                  34m</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>You can check the status of the storage cluster with the following:</p>
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc get storagecluster -n openshift-storage ocs-storagecluster -o jsonpath='{.status.phase}{"\n"}'</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc get storagecluster -n openshift-storage ocs-storagecluster -o <span class="tok-nv">jsonpath</span><span class="tok-o">=</span><span class="tok-s1">&#39;{.status.phase}{&quot;\n&quot;}&#39;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1300,7 +1301,7 @@ expanding the <code>Storage</code> menu in the left navigation bar and selecting
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc -n openshift-storage get sc</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc -n openshift-storage get sc</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1332,24 +1333,24 @@ manually.</p>
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc patch OCSInitialization ocsinit -n openshift-storage --type json --patch  '[{ "op": "replace", "path": "/spec/enableCephTools", "value": true }]'
-TOOLS_POD=$(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name)
-oc rsh -n openshift-storage pod/$TOOLS_POD ceph df</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc patch OCSInitialization ocsinit -n openshift-storage --type json --patch  <span class="tok-s1">&#39;[{ &quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/spec/enableCephTools&quot;, &quot;value&quot;: true }]&#39;</span>
+<span class="tok-nv">TOOLS_POD</span><span class="tok-o">=</span><span class="tok-k">$(</span>oc get pods -n openshift-storage -l <span class="tok-nv">app</span><span class="tok-o">=</span>rook-ceph-tools -o name<span class="tok-k">)</span>
+oc rsh -n openshift-storage pod/<span class="tok-nv">$TOOLS_POD</span> ceph df</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">RAW STORAGE:
+<pre class="pygments highlight"><code data-lang="shell"><span></span>RAW STORAGE:
     CLASS     SIZE      AVAIL       USED        RAW USED     %RAW USED
-    ssd       6 TiB     6.0 TiB     101 MiB      3.1 GiB          0.05
-    TOTAL     6 TiB     6.0 TiB     101 MiB      3.1 GiB          0.05
+    ssd       <span class="tok-m">6</span> TiB     <span class="tok-m">6</span>.0 TiB     <span class="tok-m">101</span> MiB      <span class="tok-m">3</span>.1 GiB          <span class="tok-m">0</span>.05
+    TOTAL     <span class="tok-m">6</span> TiB     <span class="tok-m">6</span>.0 TiB     <span class="tok-m">101</span> MiB      <span class="tok-m">3</span>.1 GiB          <span class="tok-m">0</span>.05
 
 POOLS:
     POOL                                           ID     STORED      OBJECTS     USED        %USED     MAX AVAIL
-    ocs-storagecluster-cephblockpool                1      33 MiB          63     100 MiB         0       1.7 TiB
-    ocs-storagecluster-cephfilesystem-metadata      2     2.2 KiB          22      96 KiB         0       1.7 TiB
-    ocs-storagecluster-cephfilesystem-data0         3         0 B           0         0 B         0       1.7 TiB</code></pre>
+    ocs-storagecluster-cephblockpool                <span class="tok-m">1</span>      <span class="tok-m">33</span> MiB          <span class="tok-m">63</span>     <span class="tok-m">100</span> MiB         <span class="tok-m">0</span>       <span class="tok-m">1</span>.7 TiB
+    ocs-storagecluster-cephfilesystem-metadata      <span class="tok-m">2</span>     <span class="tok-m">2</span>.2 KiB          <span class="tok-m">22</span>      <span class="tok-m">96</span> KiB         <span class="tok-m">0</span>       <span class="tok-m">1</span>.7 TiB
+    ocs-storagecluster-cephfilesystem-data0         <span class="tok-m">3</span>         <span class="tok-m">0</span> B           <span class="tok-m">0</span>         <span class="tok-m">0</span> B         <span class="tok-m">0</span>       <span class="tok-m">1</span>.7 TiB</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1357,7 +1358,7 @@ POOLS:
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc apply -f https://raw.githubusercontent.com/mikelo/mikelo.github.io/master/ocs/cluster-monitoring-configmap.storage.yaml</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc apply -f https://raw.githubusercontent.com/mikelo/mikelo.github.io/master/ocs/cluster-monitoring-configmap.storage.yaml</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1365,37 +1366,37 @@ POOLS:
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc get pod -o wide</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc get pod -o wide</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">NAME                                           READY   STATUS    RESTARTS   AGE     IP             NODE                                            NOMINATED NODE   READINESS GATES
-alertmanager-main-0                            5/5     Running   0          42s     10.128.4.13    ip-10-0-223-56.eu-central-1.compute.internal    &lt;none&gt;           &lt;none&gt;
-alertmanager-main-1                            5/5     Running   0          69s     10.130.2.14    ip-10-0-189-227.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-alertmanager-main-2                            5/5     Running   0          95s     10.131.2.20    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-cluster-monitoring-operator-79b8bcd7d7-cmb56   2/2     Running   3          6h33m   10.128.0.4     ip-10-0-223-47.eu-central-1.compute.internal    &lt;none&gt;           &lt;none&gt;
-grafana-649bb46c47-vkvqq                       2/2     Running   0          91s     10.131.2.22    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-kube-state-metrics-76ff46f884-ntgnx            3/3     Running   0          99s     10.131.2.16    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-node-exporter-2pc52                            2/2     Running   0          6h22m   10.0.194.74    ip-10-0-194-74.eu-central-1.compute.internal    &lt;none&gt;           &lt;none&gt;
-node-exporter-7sqnf                            2/2     Running   0          5h48m   10.0.189.227   ip-10-0-189-227.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-node-exporter-9sfvw                            2/2     Running   0          6h28m   10.0.132.238   ip-10-0-132-238.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-node-exporter-b8df5                            2/2     Running   0          6h22m   10.0.129.227   ip-10-0-129-227.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-node-exporter-bdbv9                            2/2     Running   0          6h22m   10.0.166.96    ip-10-0-166-96.eu-central-1.compute.internal    &lt;none&gt;           &lt;none&gt;
-node-exporter-d549q                            2/2     Running   0          5h48m   10.0.223.56    ip-10-0-223-56.eu-central-1.compute.internal    &lt;none&gt;           &lt;none&gt;
-node-exporter-m7ghp                            2/2     Running   0          6h28m   10.0.167.222   ip-10-0-167-222.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-node-exporter-rxpvm                            2/2     Running   0          5h48m   10.0.139.155   ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-node-exporter-tbl7v                            2/2     Running   0          6h28m   10.0.223.47    ip-10-0-223-47.eu-central-1.compute.internal    &lt;none&gt;           &lt;none&gt;
-openshift-state-metrics-97b67f7bf-2gnbt        3/3     Running   0          99s     10.131.2.17    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-prometheus-adapter-5b95948cbb-td86s            1/1     Running   0          94s     10.131.2.21    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-prometheus-adapter-5b95948cbb-tdh7x            1/1     Running   0          84s     10.130.2.13    ip-10-0-189-227.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-prometheus-k8s-0                               6/6     Running   1          51s     10.130.2.15    ip-10-0-189-227.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-prometheus-k8s-1                               6/6     Running   1          89s     10.131.2.23    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-prometheus-operator-d4b8885b9-h6x9b            2/2     Running   0          99s     10.131.2.18    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-telemeter-client-769bccbc99-t7fsl              3/3     Running   0          96s     10.131.2.19    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-thanos-querier-bf7898547-r8gjd                 5/5     Running   0          6h20m   10.129.2.4     ip-10-0-129-227.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
-thanos-querier-bf7898547-rk7cd                 5/5     Running   0          6h20m   10.131.0.10    ip-10-0-166-96.eu-central-1.compute.internal    &lt;none&gt;</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>NAME                                           READY   STATUS    RESTARTS   AGE     IP             NODE                                            NOMINATED NODE   READINESS GATES
+alertmanager-main-0                            <span class="tok-m">5</span>/5     Running   <span class="tok-m">0</span>          42s     <span class="tok-m">10</span>.128.4.13    ip-10-0-223-56.eu-central-1.compute.internal    &lt;none&gt;           &lt;none&gt;
+alertmanager-main-1                            <span class="tok-m">5</span>/5     Running   <span class="tok-m">0</span>          69s     <span class="tok-m">10</span>.130.2.14    ip-10-0-189-227.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+alertmanager-main-2                            <span class="tok-m">5</span>/5     Running   <span class="tok-m">0</span>          95s     <span class="tok-m">10</span>.131.2.20    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+cluster-monitoring-operator-79b8bcd7d7-cmb56   <span class="tok-m">2</span>/2     Running   <span class="tok-m">3</span>          6h33m   <span class="tok-m">10</span>.128.0.4     ip-10-0-223-47.eu-central-1.compute.internal    &lt;none&gt;           &lt;none&gt;
+grafana-649bb46c47-vkvqq                       <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          91s     <span class="tok-m">10</span>.131.2.22    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+kube-state-metrics-76ff46f884-ntgnx            <span class="tok-m">3</span>/3     Running   <span class="tok-m">0</span>          99s     <span class="tok-m">10</span>.131.2.16    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+node-exporter-2pc52                            <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          6h22m   <span class="tok-m">10</span>.0.194.74    ip-10-0-194-74.eu-central-1.compute.internal    &lt;none&gt;           &lt;none&gt;
+node-exporter-7sqnf                            <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          5h48m   <span class="tok-m">10</span>.0.189.227   ip-10-0-189-227.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+node-exporter-9sfvw                            <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          6h28m   <span class="tok-m">10</span>.0.132.238   ip-10-0-132-238.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+node-exporter-b8df5                            <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          6h22m   <span class="tok-m">10</span>.0.129.227   ip-10-0-129-227.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+node-exporter-bdbv9                            <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          6h22m   <span class="tok-m">10</span>.0.166.96    ip-10-0-166-96.eu-central-1.compute.internal    &lt;none&gt;           &lt;none&gt;
+node-exporter-d549q                            <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          5h48m   <span class="tok-m">10</span>.0.223.56    ip-10-0-223-56.eu-central-1.compute.internal    &lt;none&gt;           &lt;none&gt;
+node-exporter-m7ghp                            <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          6h28m   <span class="tok-m">10</span>.0.167.222   ip-10-0-167-222.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+node-exporter-rxpvm                            <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          5h48m   <span class="tok-m">10</span>.0.139.155   ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+node-exporter-tbl7v                            <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          6h28m   <span class="tok-m">10</span>.0.223.47    ip-10-0-223-47.eu-central-1.compute.internal    &lt;none&gt;           &lt;none&gt;
+openshift-state-metrics-97b67f7bf-2gnbt        <span class="tok-m">3</span>/3     Running   <span class="tok-m">0</span>          99s     <span class="tok-m">10</span>.131.2.17    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+prometheus-adapter-5b95948cbb-td86s            <span class="tok-m">1</span>/1     Running   <span class="tok-m">0</span>          94s     <span class="tok-m">10</span>.131.2.21    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+prometheus-adapter-5b95948cbb-tdh7x            <span class="tok-m">1</span>/1     Running   <span class="tok-m">0</span>          84s     <span class="tok-m">10</span>.130.2.13    ip-10-0-189-227.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+prometheus-k8s-0                               <span class="tok-m">6</span>/6     Running   <span class="tok-m">1</span>          51s     <span class="tok-m">10</span>.130.2.15    ip-10-0-189-227.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+prometheus-k8s-1                               <span class="tok-m">6</span>/6     Running   <span class="tok-m">1</span>          89s     <span class="tok-m">10</span>.131.2.23    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+prometheus-operator-d4b8885b9-h6x9b            <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          99s     <span class="tok-m">10</span>.131.2.18    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+telemeter-client-769bccbc99-t7fsl              <span class="tok-m">3</span>/3     Running   <span class="tok-m">0</span>          96s     <span class="tok-m">10</span>.131.2.19    ip-10-0-139-155.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+thanos-querier-bf7898547-r8gjd                 <span class="tok-m">5</span>/5     Running   <span class="tok-m">0</span>          6h20m   <span class="tok-m">10</span>.129.2.4     ip-10-0-129-227.eu-central-1.compute.internal   &lt;none&gt;           &lt;none&gt;
+thanos-querier-bf7898547-rk7cd                 <span class="tok-m">5</span>/5     Running   <span class="tok-m">0</span>          6h20m   <span class="tok-m">10</span>.131.0.10    ip-10-0-166-96.eu-central-1.compute.internal    &lt;none&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1403,41 +1404,53 @@ thanos-querier-bf7898547-rk7cd                 5/5     Running   0          6h20
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="yaml">    prometheusK8s:
-      nodeSelector:
-        node-role.kubernetes.io/infra: ""
-      tolerations:
-      - key: infra
-        value: reserved
-        effect: NoExecute
-      - key: node.ocs.openshift.io/storage
-        value: "true"
-        effect: NoSchedule</code></pre>
+<pre class="pygments highlight"><code data-lang="yaml"><span></span>    <span class="tok-nt">prometheusK8s</span><span class="tok-p">:</span>
+      <span class="tok-nt">nodeSelector</span><span class="tok-p">:</span>
+        <span class="tok-nt">node-role.kubernetes.io/infra</span><span class="tok-p">:</span> <span class="tok-s">&quot;&quot;</span>
+      <span class="tok-nt">tolerations</span><span class="tok-p">:</span>
+      <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">key</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">infra</span>
+        <span class="tok-nt">value</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">reserved</span>
+        <span class="tok-nt">effect</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">NoExecute</span>
+      <span class="tok-p tok-p-Indicator">-</span> <span class="tok-nt">key</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">node.ocs.openshift.io/storage</span>
+        <span class="tok-nt">value</span><span class="tok-p">:</span> <span class="tok-s">&quot;true&quot;</span>
+        <span class="tok-nt">effect</span><span class="tok-p">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">NoSchedule</span></code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_test_an_ocp_application_deployment_using_cephfs_volume">4. Test an OCP application deployment using CephFS volume</h2>
+<h2 id="_test_an_ocp_application_deployment_using_a_cephfs_volume">4. Test an OCP application deployment using a CephFS volume</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In this section the <code>ocs-storagecluster-cephfs</code> <strong>StorageClass</strong> will be used
-by an OCP application + database <strong>Deployment</strong> to create RWO (ReadWriteOnce)
+by an OCP application and a database <strong>Deployment</strong> to create an RWO (ReadWriteOnce)
 persistent storage.</p>
 </div>
 <div class="paragraph">
-<p>We are following this blog here and we add a few adjustments to the YAML file and the testing scripts:</p>
+<p>We are following this blog here</p>
 </div>
 <div class="paragraph">
 <p><code><a href="https://www.redhat.com/en/blog/mysql-openshift-container-storage-performance-and-failover-under-heavy-load" class="bare">https://www.redhat.com/en/blog/mysql-openshift-container-storage-performance-and-failover-under-heavy-load</a></code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+we added a few twearks to the YAML file and the testing scripts to make it work for our cluster
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Start by creating a new project:</p>
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc new-project sysbench</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc new-project sysbench</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1445,7 +1458,7 @@ persistent storage.</p>
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc apply -f https://raw.githubusercontent.com/mikelo/mikelo.github.io/master/ocs/OCS-FS-STS.yaml</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc apply -f https://raw.githubusercontent.com/mikelo/mikelo.github.io/master/ocs/OCS-FS-STS.yaml</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1453,13 +1466,13 @@ persistent storage.</p>
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc get pvc</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc get pvc</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">NAME                                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                AGE
+<pre class="pygments highlight"><code data-lang="shell"><span></span>NAME                                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                AGE
 mysql-ocs-fs-data-mysql-ocs-fs-0    Bound    pvc-0194b560-1593-4ae7-a527-9331e35e28c1   15Gi       RWO            ocs-storagecluster-cephfs   21s
 mysql-ocs-fs-data-mysql-ocs-fs-1    Bound    pvc-c76a39da-40de-4b07-a836-7e20a15fb565   15Gi       RWO            ocs-storagecluster-cephfs   20s
 mysql-ocs-fs-data-mysql-ocs-fs-10   Bound    pvc-117ad8ae-5774-4891-b1fd-5fcfd90d52bc   15Gi       RWO            ocs-storagecluster-cephfs   20s
@@ -1488,33 +1501,33 @@ mysql-ocs-fs-data-mysql-ocs-fs-9    Bound    pvc-e855f29c-99a8-43b2-bb6e-c46c4f7
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">oc get pods</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>oc get pods</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">NAME              READY   STATUS    RESTARTS   AGE
-mysql-ocs-fs-0    2/2     Running   0          3m40s
-mysql-ocs-fs-1    2/2     Running   0          3m40s
-mysql-ocs-fs-10   2/2     Running   0          3m40s
-mysql-ocs-fs-11   2/2     Running   0          3m40s
-mysql-ocs-fs-12   2/2     Running   0          3m40s
-mysql-ocs-fs-13   2/2     Running   0          3m40s
-mysql-ocs-fs-14   2/2     Running   0          3m39s
-mysql-ocs-fs-15   2/2     Running   0          3m39s
-mysql-ocs-fs-16   2/2     Running   0          3m39s
-mysql-ocs-fs-17   2/2     Running   0          3m39s
-mysql-ocs-fs-18   2/2     Running   0          3m39s
-mysql-ocs-fs-19   2/2     Running   0          3m39s
-mysql-ocs-fs-2    2/2     Running   0          3m40s
-mysql-ocs-fs-3    2/2     Running   0          3m40s
-mysql-ocs-fs-4    2/2     Running   0          3m40s
-mysql-ocs-fs-5    2/2     Running   0          3m40s
-mysql-ocs-fs-6    2/2     Running   0          3m40s
-mysql-ocs-fs-7    2/2     Running   0          3m40s
-mysql-ocs-fs-8    2/2     Running   0          3m40s
-mysql-ocs-fs-9    2/2     Running   0          3m40s</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span>NAME              READY   STATUS    RESTARTS   AGE
+mysql-ocs-fs-0    <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m40s
+mysql-ocs-fs-1    <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m40s
+mysql-ocs-fs-10   <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m40s
+mysql-ocs-fs-11   <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m40s
+mysql-ocs-fs-12   <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m40s
+mysql-ocs-fs-13   <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m40s
+mysql-ocs-fs-14   <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m39s
+mysql-ocs-fs-15   <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m39s
+mysql-ocs-fs-16   <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m39s
+mysql-ocs-fs-17   <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m39s
+mysql-ocs-fs-18   <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m39s
+mysql-ocs-fs-19   <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m39s
+mysql-ocs-fs-2    <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m40s
+mysql-ocs-fs-3    <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m40s
+mysql-ocs-fs-4    <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m40s
+mysql-ocs-fs-5    <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m40s
+mysql-ocs-fs-6    <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m40s
+mysql-ocs-fs-7    <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m40s
+mysql-ocs-fs-8    <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m40s
+mysql-ocs-fs-9    <span class="tok-m">2</span>/2     Running   <span class="tok-m">0</span>          3m40s</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1522,25 +1535,25 @@ mysql-ocs-fs-9    2/2     Running   0          3m40s</code></pre>
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">for pod in $(oc get pods|grep mysql|awk '{print $1}');do echo "pod $pod";oc rsh -c mysql-ocs-fs mysql-ocs-fs-9 mysql -uroot -ppassword -h localhost sysbench -e "SELECT count(1) from sbtest10;";done</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span><span class="tok-k">for</span> pod <span class="tok-k">in</span> <span class="tok-k">$(</span>oc get pods<span class="tok-p">|</span>grep mysql<span class="tok-p">|</span>awk <span class="tok-s1">&#39;{print $1}&#39;</span><span class="tok-k">)</span><span class="tok-p">;</span><span class="tok-k">do</span> <span class="tok-nb">echo</span> <span class="tok-s2">&quot;pod </span><span class="tok-nv">$pod</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span>oc rsh -c mysql-ocs-fs mysql-ocs-fs-9 mysql -uroot -ppassword -h localhost sysbench -e <span class="tok-s2">&quot;SELECT count(1) from sbtest10;&quot;</span><span class="tok-p">;</span><span class="tok-k">done</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output:</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">pod mysql-ocs-fs-0
-mysql: [Warning] Using a password on the command line interface can be insecure.
+<pre class="pygments highlight"><code data-lang="shell"><span></span>pod mysql-ocs-fs-0
+mysql: <span class="tok-o">[</span>Warning<span class="tok-o">]</span> Using a password on the <span class="tok-nb">command</span> line interface can be insecure.
 +----------+
-| count(1) |
+<span class="tok-p">|</span> count<span class="tok-o">(</span><span class="tok-m">1</span><span class="tok-o">)</span> <span class="tok-p">|</span>
 +----------+
-|  1000000 |
+<span class="tok-p">|</span>  <span class="tok-m">1000000</span> <span class="tok-p">|</span>
 +----------+
 pod mysql-ocs-fs-1
-mysql: [Warning] Using a password on the command line interface can be insecure.
+mysql: <span class="tok-o">[</span>Warning<span class="tok-o">]</span> Using a password on the <span class="tok-nb">command</span> line interface can be insecure.
 +----------+
-| count(1) |
+<span class="tok-p">|</span> count<span class="tok-o">(</span><span class="tok-m">1</span><span class="tok-o">)</span> <span class="tok-p">|</span>
 +----------+
-|  1000000 |
+<span class="tok-p">|</span>  <span class="tok-m">1000000</span> <span class="tok-p">|</span>
 +----------+</code></pre>
 </div>
 </div>
@@ -1549,23 +1562,23 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">TOOLS_POD=$(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name)
-oc rsh -n openshift-storage pod/$TOOLS_POD ceph df</code></pre>
+<pre class="pygments highlight"><code data-lang="shell"><span></span><span class="tok-nv">TOOLS_POD</span><span class="tok-o">=</span><span class="tok-k">$(</span>oc get pods -n openshift-storage -l <span class="tok-nv">app</span><span class="tok-o">=</span>rook-ceph-tools -o name<span class="tok-k">)</span>
+oc rsh -n openshift-storage pod/<span class="tok-nv">$TOOLS_POD</span> ceph df</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Example output</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="shell">RAW STORAGE:
+<pre class="pygments highlight"><code data-lang="shell"><span></span>RAW STORAGE:
     CLASS     SIZE	AVAIL       USED       RAW USED     %RAW USED
-    ssd       6 TiB     5.9 TiB     88 GiB	 91 GiB          1.49
-    TOTAL     6 TiB     5.9 TiB     88 GiB	 91 GiB          1.49
+    ssd       <span class="tok-m">6</span> TiB     <span class="tok-m">5</span>.9 TiB     <span class="tok-m">88</span> GiB	 <span class="tok-m">91</span> GiB          <span class="tok-m">1</span>.49
+    TOTAL     <span class="tok-m">6</span> TiB     <span class="tok-m">5</span>.9 TiB     <span class="tok-m">88</span> GiB	 <span class="tok-m">91</span> GiB          <span class="tok-m">1</span>.49
 
 POOLS:
     POOL                                           ID     STORED      OBJECTS     USED        %USED     MAX AVAIL
-    ocs-storagecluster-cephblockpool                1	   57 MiB          68     170 MiB         0	  1.7 TiB
-    ocs-storagecluster-cephfilesystem-metadata      2     191 MiB         213     572 MiB      0.01	  1.7 TiB
-    ocs-storagecluster-cephfilesystem-data0         3	   29 GiB      13.17k	   88 GiB      1.68	  1.7 TiB</code></pre>
+    ocs-storagecluster-cephblockpool                <span class="tok-m">1</span>	   <span class="tok-m">57</span> MiB          <span class="tok-m">68</span>     <span class="tok-m">170</span> MiB         <span class="tok-m">0</span>	  <span class="tok-m">1</span>.7 TiB
+    ocs-storagecluster-cephfilesystem-metadata      <span class="tok-m">2</span>     <span class="tok-m">191</span> MiB         <span class="tok-m">213</span>     <span class="tok-m">572</span> MiB      <span class="tok-m">0</span>.01	  <span class="tok-m">1</span>.7 TiB
+    ocs-storagecluster-cephfilesystem-data0         <span class="tok-m">3</span>	   <span class="tok-m">29</span> GiB      <span class="tok-m">13</span>.17k	   <span class="tok-m">88</span> GiB      <span class="tok-m">1</span>.68	  <span class="tok-m">1</span>.7 TiB</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1576,8 +1589,84 @@ POOLS:
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-03-01 16:07:10 +0100
+Last updated 2021-03-03 11:40:01 +0100
 </div>
 </div>
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+pre.pygments .hll { background-color: #ffffcc }
+pre.pygments { background: #f8f8f8; }
+pre.pygments .tok-c { color: #408080; font-style: italic } /* Comment */
+pre.pygments .tok-err { border: 1px solid #FF0000 } /* Error */
+pre.pygments .tok-k { color: #008000; font-weight: bold } /* Keyword */
+pre.pygments .tok-o { color: #666666 } /* Operator */
+pre.pygments .tok-ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+pre.pygments .tok-cm { color: #408080; font-style: italic } /* Comment.Multiline */
+pre.pygments .tok-cp { color: #BC7A00 } /* Comment.Preproc */
+pre.pygments .tok-cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+pre.pygments .tok-c1 { color: #408080; font-style: italic } /* Comment.Single */
+pre.pygments .tok-cs { color: #408080; font-style: italic } /* Comment.Special */
+pre.pygments .tok-gd { color: #A00000 } /* Generic.Deleted */
+pre.pygments .tok-ge { font-style: italic } /* Generic.Emph */
+pre.pygments .tok-gr { color: #FF0000 } /* Generic.Error */
+pre.pygments .tok-gh { color: #000080; font-weight: bold } /* Generic.Heading */
+pre.pygments .tok-gi { color: #00A000 } /* Generic.Inserted */
+pre.pygments .tok-go { color: #888888 } /* Generic.Output */
+pre.pygments .tok-gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+pre.pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+pre.pygments .tok-gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+pre.pygments .tok-gt { color: #0044DD } /* Generic.Traceback */
+pre.pygments .tok-kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+pre.pygments .tok-kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+pre.pygments .tok-kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+pre.pygments .tok-kp { color: #008000 } /* Keyword.Pseudo */
+pre.pygments .tok-kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+pre.pygments .tok-kt { color: #B00040 } /* Keyword.Type */
+pre.pygments .tok-m { color: #666666 } /* Literal.Number */
+pre.pygments .tok-s { color: #BA2121 } /* Literal.String */
+pre.pygments .tok-na { color: #7D9029 } /* Name.Attribute */
+pre.pygments .tok-nb { color: #008000 } /* Name.Builtin */
+pre.pygments .tok-nc { color: #0000FF; font-weight: bold } /* Name.Class */
+pre.pygments .tok-no { color: #880000 } /* Name.Constant */
+pre.pygments .tok-nd { color: #AA22FF } /* Name.Decorator */
+pre.pygments .tok-ni { color: #999999; font-weight: bold } /* Name.Entity */
+pre.pygments .tok-ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+pre.pygments .tok-nf { color: #0000FF } /* Name.Function */
+pre.pygments .tok-nl { color: #A0A000 } /* Name.Label */
+pre.pygments .tok-nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+pre.pygments .tok-nt { color: #008000; font-weight: bold } /* Name.Tag */
+pre.pygments .tok-nv { color: #19177C } /* Name.Variable */
+pre.pygments .tok-ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+pre.pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+pre.pygments .tok-mb { color: #666666 } /* Literal.Number.Bin */
+pre.pygments .tok-mf { color: #666666 } /* Literal.Number.Float */
+pre.pygments .tok-mh { color: #666666 } /* Literal.Number.Hex */
+pre.pygments .tok-mi { color: #666666 } /* Literal.Number.Integer */
+pre.pygments .tok-mo { color: #666666 } /* Literal.Number.Oct */
+pre.pygments .tok-sa { color: #BA2121 } /* Literal.String.Affix */
+pre.pygments .tok-sb { color: #BA2121 } /* Literal.String.Backtick */
+pre.pygments .tok-sc { color: #BA2121 } /* Literal.String.Char */
+pre.pygments .tok-dl { color: #BA2121 } /* Literal.String.Delimiter */
+pre.pygments .tok-sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+pre.pygments .tok-s2 { color: #BA2121 } /* Literal.String.Double */
+pre.pygments .tok-se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+pre.pygments .tok-sh { color: #BA2121 } /* Literal.String.Heredoc */
+pre.pygments .tok-si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+pre.pygments .tok-sx { color: #008000 } /* Literal.String.Other */
+pre.pygments .tok-sr { color: #BB6688 } /* Literal.String.Regex */
+pre.pygments .tok-s1 { color: #BA2121 } /* Literal.String.Single */
+pre.pygments .tok-ss { color: #19177C } /* Literal.String.Symbol */
+pre.pygments .tok-bp { color: #008000 } /* Name.Builtin.Pseudo */
+pre.pygments .tok-fm { color: #0000FF } /* Name.Function.Magic */
+pre.pygments .tok-vc { color: #19177C } /* Name.Variable.Class */
+pre.pygments .tok-vg { color: #19177C } /* Name.Variable.Global */
+pre.pygments .tok-vi { color: #19177C } /* Name.Variable.Instance */
+pre.pygments .tok-vm { color: #19177C } /* Name.Variable.Magic */
+pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
+</style>
 </body>
 </html>
