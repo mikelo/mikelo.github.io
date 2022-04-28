@@ -11,7 +11,7 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RTCDB", function() { return RTCDB; });
 /*
-    Copyright 2021 Tobias Baum.
+    Copyright 2021 Michele Orlandi.
     
     This file is part of RTCDB.
 
@@ -14701,7 +14701,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "RTCDB", function() { return _rtcdb__WEBPACK_IMPORTED_MODULE_0__["RTCDB"]; });
 
 /*
-    Copyright 2021 Tobias Baum.
+    Copyright 2021 Michele Orlandi.
     
     This file is part of RTCDB.
 
