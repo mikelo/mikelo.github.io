@@ -1,0 +1,64 @@
+div {
+	padding: 4px;
+}
+
+#toClassify {
+	border-style: solid;
+	border-width: 1px;
+	width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#flexContainer {
+	display: flex;
+	flex-direction: row;
+}
+
+#buckets {
+	flex-grow: 1;
+	overflow: auto;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.bucket {
+	border-style: dotted;
+	border-width: 1px;
+	width: 200px;
+	min-width: 200px;
+	margin: 2px;
+}
+
+.bucket.highlight {
+	background-color: #DDDDDD;
+}
+
+.head {
+}
+
+.item {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+#postpone {
+	background-color: #CCCCCC;
+	width: 150px;
+}
+
+#postpone.highlight {
+	background-color: #DDDDDD;
+}
+
+#newBucket {
+	background-color: #CCCCCC;
+	width: 150px;
+}
+
+#newBucket.highlight {
+	background-color: #DDDDDD;
+}
+

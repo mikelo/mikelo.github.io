@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>BBS Ordering Principles</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>BBS Ordering Principles</h1>
+<p>In my research on <a href="https://doi.org/10.1109/ICSME.2017.28">ordering code changes for review</a> (together with Alberto Bacchelli and Kurt Schneider), I developed the following set of principles how to order a set of interrelated code changes to ease understanding:</p>
+
+<ol>
+<li>Group  related  change  parts  as  closely  as possible.</li>
+<li>Provide information before it is needed.</li>
+<li>In case of conflicts between Principles 1 and 2, prefer Principle 1 (grouping).</li>
+<li>Closely related change parts form chunks treated as elementary for further grouping and ordering.</li>
+<li>The closest distance between two change parts is "visible on the screen at the same time."</li>
+<li>To satisfy the other principles, use rules that the reviewer can understand. Support this by making the grouping explicit to the reviewer.</li>
+</ol>
+
+<p>By replacing "change part" with "section/item/stuff" and "reviewer" with "reader", the principles are probably applicable to many other areas beyond change-based code review.</p>
+
+<p>For more details, <a href="http://tobias-baum.de/rp/optimalordering.pdf">read the full paper</a>.</p>
+
+</body>
+</html>
