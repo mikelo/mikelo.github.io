@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Quantitative Pairwise Ranking</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	class Item {
+		constructor(name) {
+			this.name = name;
+			this.weight = 1.0;
+			this.predecessors = [];
+		}
+		
+		isBetterThan(otherItem, edgeWeight) {
+			this.predecessors.push(new Edge(otherItem, edgeWeight));
+		}
+		
+	}
+	
+	class Edge {
+		constructor(from, edgeWeight) {
+			this.from = from;
+			this.edgeWeight = edgeWeight;
+		}
+		
+		calculateSuccessorValue() {
+			return this.edgeWeight * this.from.weight;
+		}
+	}
+	
+	class JoinableComponentStructure {
+		constructor() {
+			this.cnt = 0;
+			this.parents = {};
+		}
+
+		/**
+		 * Fügt eine neue Komponente hinzu und liefert deren ID zurück.
+		 * Dadurch erhöht sich die Anzahl der Komponenten zurück.
+		 */
+		createNewComponent() {
+			this.cnt++;
+			let id = "c" + this.cnt;
+			this.parents[id] = id;
+			return id;
+		}
+
+		/**
+		 * Führt die Komponenten zusammen, zu denen die übergebenen IDs gehören.
+		 * Dadurch verringert sich die Anzahl der Komponenten um eins.
+		 * Falls sie schon zusammengeführt waren, passiert nichts (außer eventuellen
+		 * internen Optimierungen).
+		 */
+		join(c1, c2) {
+			let t1 = this.getTopmost(c1);
+			let t2 = this.getTopmost(c2);
+			this.parents[t1] = t2;
+		}
+
+		/**
+		 * Liefert das Ende der "parent"-Kette für die übergebene ID, d.h.
+		 * die ID, welche zur Identifikation der Komponente unter Berücksichtigung
+		 * der joins dient. Um für zukünftige Aufrufe die Performance zu
+		 * verbessern, wird die ermittelte topmost-ID als neuer direkter Parent
+		 * eingetragen.
+		 */
+		getTopmost(c) {
+			let parent = this.parents[c];
+			if (parent == c) {
+				return c;
+			}
+			let topmost = this.getTopmost(parent);
+			if (topmost != parent) {
+				this.parents[c] = topmost;
+			}
+			return topmost;
+		}
+
+		/**
+		 * Liefert die Anzahl der Komponenten zurück.
+		 */
+		countComponents() {
+			let count = 0;
+			for (let key in this.parents) {
+				if (key == this.parents[key]) {
+					count++;
+				}
+			}
+			return count;
+		}
+	}
+
+	function init() {
+		$('#itemInput').val('hallo\nwelt');
+		
+		start();
+	}
+	
+	var items = [];
+	var comparisonCount = 0;
+	
+	function start() {
+		let text = $("#itemInput").val();
+		let itemsRaw = text.split("\n");
+		
+		let itemNames = [];
+		for (var i = 0; i < itemsRaw.length; i++) {
+			var tr = itemsRaw[i].trim();
+			
+			if (tr != "" && !items.includes(tr)) {
+				itemNames.push(tr);
+			}
+		}
+		items = itemNames.map(n => new Item(n));
+		showRandomComparison();
+		print(items);
+		$('#log').val('');
+		comparisonCount = 0;
+		$('#input').hide();
+		$('#workArea').show();
+	}
+	
+	function showRandomComparison() {
+		if (items.length <= 1) {
+			return;
+		}
+		let index1 = Math.floor(Math.random() * items.length);
+		let index2 = Math.floor(Math.random() * items.length);
+		if (index1 == index2) {
+			if (index1 == 0) {
+				index1 = 1;
+			} else {
+				index1 = index2 - 1;
+			}
+		}
+		let item1 = items[index1];
+		let item2 = items[index2];
+		let html = '<center>Vergleiche<br/><b>';
+		html += item1.name + "</b> und <b>" + item2.name + "</b><br/><br/>";
+		let short1 = shorten(item1.name);
+		let short2 = shorten(item2.name);
+		html += "<button onclick='addOtherFactor(" + index1 + ", " + index2 + ")'>" + short1 + "<br/>ist ...-fach<br/>wichtiger</button>";
+		html += "<button onclick='addComparisonResult(" + index1 + ", " + index2 + ", 4.0)'>" + short1 + "<br/>ist 4-fach<br/>wichtiger</button>";
+		html += "<button onclick='addComparisonResult(" + index1 + ", " + index2 + ", 2.0)'>" + short1 + "<br/>ist 2-fach<br/>wichtiger</button>";
+		html += "<button onclick='addComparisonResult(" + index1 + ", " + index2 + ", 1.5)'>" + short1 + "<br/>ist 50%<br/>wichtiger</button>";
+		html += "<button onclick='addComparisonResult(" + index1 + ", " + index2 + ", 1.0)'>gleich wichtig</button>";
+		html += "<button onclick='addComparisonResult(" + index2 + ", " + index1 + ", 1.5)'>" + short2 + "<br/>ist 50%<br/>wichtiger</button>";
+		html += "<button onclick='addComparisonResult(" + index2 + ", " + index1 + ", 2.0)'>" + short2 + "<br/>ist 2-fach<br/>wichtiger</button>";
+		html += "<button onclick='addComparisonResult(" + index2 + ", " + index1 + ", 4.0)'>" + short2 + "<br/>ist 4-fach<br/>wichtiger</button>";
+		html += "<button onclick='addOtherFactor(" + index2 + ", " + index1 + ")'>" + short2 + "<br/>ist ...-fach<br/>wichtiger</button>";
+		html += "</center>";
+		$('#comparison').html(html);
+	}
+	
+	function shorten(name) {
+		if (name.length > 20) {
+			return name.substring(0, 20) + "...";
+		} else {
+			return name;
+		}
+	}
+	
+	function addOtherFactor(itemIndex1, itemIndex2) {
+		let factor = prompt('Faktor:');
+		if (factor) {
+			addComparisonResult(itemIndex1, itemIndex2, Number.parseFloat(factor))
+		}
+	}
+	
+	function addComparisonResult(itemIndex1, itemIndex2, factor) {
+		if (factor < 0) {
+			addComparisonResult(itemIndex2, itemIndex1, -factor);
+			return;
+		}
+		if (factor < 1) {
+			addComparisonResult(itemIndex2, itemIndex1, 1 / factor);
+			return;
+		}
+		let item1 = items[itemIndex1];
+		let item2 = items[itemIndex2];
+		if (factor == 1) {
+			item1.isBetterThan(item2, 1.0);
+			item2.isBetterThan(item1, 1.0);
+		} else {
+			item1.isBetterThan(item2, factor);			
+		}
+		comparisonCount++;
+		$('#log').val(item1.name + ' = ' + factor + ' * ' + item2.name + '\n' + $('#log').val());
+		$('#countSpan').text(comparisonCount + " Vergleiche von " + items.length + " Objekten");
+		print(items);
+		showRandomComparison();
+	}
+	
+	function print(arr) {
+		calculateShare(arr);
+		arr.sort((a, b) => b.weight - a.weight);
+		
+		let html = '<i>Ergebnisse:</i><br/><table>';
+		arr.forEach(it => html += '<tr><td>' +  it.name + '</td><td>' + Math.round(it.weight * 100) + '%</td></tr>');
+		html += '</table>';
+		if (isUnderspecified(arr)) {
+			html += "<i>noch unterspezifiziert</i>";
+		}
+		$('#result').html(html);
+	}
+	
+	function isUnderspecified(array) {
+		if (array.length == 0) {
+			return false;
+		}
+		// as long as the graph is not connected, the weights are underspecified
+		return countWeaklyConnectedComponents(array) > 1;
+	}
+	
+	function countWeaklyConnectedComponents(nodes) {
+		let j = new JoinableComponentStructure();
+		nodes.forEach(it => it.componentId = null);
+		nodes.forEach(node => {
+			if (node.componentId == null) {
+				node.componentId = j.createNewComponent();
+			}
+
+			node.predecessors.forEach(edge => {
+				let predecessor = edge.from;
+				if (predecessor.componentId == null) {
+					predecessor.componentId = node.componentId;
+				} else {
+					j.join(node.componentId, predecessor.componentId);
+				}
+			});
+		});
+		return j.countComponents();
+	}
+	
+	function calculateShare(array) {
+		// initialize: same weight for all items
+		let itemCount = array.length;
+		array.forEach(it => it.weight = 1.0 / itemCount);
+		
+		for (let i = 0; i < itemCount; i++) {
+			assignWeights(array);
+		}
+	}
+	
+	function assignWeights(array) {
+		let itemCount = array.length;
+		for (let i = 0; i < itemCount; i++) {
+			// score item with average of predecessors * weight
+			let predCount = array[i].predecessors.length;
+			if (predCount == 0) {
+				// no predecessors => keep value from previous round
+				array[i].rawWeight = array[i].weight;
+			} else {
+				let sum = 0.0;
+				array[i].predecessors.forEach(it => sum += it.calculateSuccessorValue());
+				array[i].rawWeight = sum / predCount;
+			}
+		}
+			
+		// normalize weights so that sum is 1
+		let weightSum = 0.0;
+		for (let i = 0; i < itemCount; i++) {
+			weightSum += array[i].rawWeight;
+		}
+		for (let i = 0; i < itemCount; i++) {
+			array[i].weight = array[i].rawWeight / weightSum;
+		}
+	}
+	</script>
+</head>
+<body>
+<div id="input">
+<h1>Online Quantitative Pairwise Ranking</h1>
+<p>Zu bewertende Einträge (einer pro Zeile):<br/>
+<textarea id="itemInput" cols="100"></textarea><br/>
+<button onclick="start()">Ranking starten >></button>
+</div>
+
+<div id="workArea" style="display:none;">
+<table>
+<tr>
+<td id="comparison">
+</td>
+<td id="result">
+</td>
+</tr>
+</table><br/><br/>
+
+<i>Vergleichslog (<span id="countSpan">noch keine Vergleiche</span>):</i><br/>
+<textarea id="log" cols="100" readonly="true"></textarea><br/>
+</div>
+
+</body>
+</html>

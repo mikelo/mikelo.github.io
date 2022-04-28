@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Interval Estimator Training</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="calibration.js"></script>
+</head>
+<body>
+<h1>Intervallschätzer-Training</h1>
+<p>Für Techniken wie <a href="https://en.wikipedia.org/wiki/Applied_information_economics">Applied Information Economics</a> müssen Konfidenzintervalle für diverse Werte geschätzt werden. Voraussetzung dafür ist, dass die Schätzer "kalibriert" sind, d.h. trainiert, um ihre eigene Schätzsicherheit besser einschätzen zu können. Mit dieser Webseite kann dieses Training durchgeführt werden.</p>
+
+<div id="start">
+	<button onclick="startCalibration()">Kalibrierung starten</button><br/>
+</div>
+
+<div id="estimation" style="display:none;">
+	<div id="question">Frage</div>
+	<div>Bitte schätze einen Bereich ab, von dem du dir 90% sicher bist, dass der korrekte Wert darin liegt:</div>
+	<form onsubmit="enterEstimate(); return false;">
+		Untergrenze: <input id="lower" type="number" step="any" title="Ein Wert, bei dem du dir 95% sicher bist, dass der korrekte Wert gleich ist oder darüber liegt" /> - Obergrenze: <input id="upper" type="number" step="any" title="Ein Wert, bei dem du dir 95% sicher bist, dass der korrekte Wert gleich ist oder darunter liegt" /><br/>
+		<button type="submit">Schätzung eintragen</button>
+	</form>
+</div>
+
+<div id="output" style="display:none;">
+Ergebnis:<br/>
+Du hast <span id="correctEstimates">x</span> von 10 Fragen richtig beantwortet. Im Idealfall sollten 9 von 10 Antworten richtig sein.
+<div id="bad" style="background-color: red;">Du scheinst zu zuversichtlich zu sein, was deine Schätzungen angeht. Probier mit den Tipps unten deine Schätzungen zu verbessern und probier es nochmal!</div>
+<div id="ok" style="background-color: yellow;">Das Ergebnis ist OK, aber vielleicht bist du noch ein bisschen zu zuversichtlich in deinen Schätzungen. Probier noch ein bisschen konservativer zu schätzen.</div>
+<div id="perfect" style="background-color: green;">Das Ergebnis ist perfekt. Du scheinst gut kalibriert zu sein. Aber wenn du möchtest probier es trotzdem nochmal, um zu prüfen, wie viel Glück dabei war.</div>
+<div id="underconfident" style="background-color: yellow;">Das Ergebnis ist nicht schlecht, aber vielleicht bist du nicht genug Risiken beim Schätzen eingegangen. Probier es nochmal.</div>
+<br/><div id="resultTable"></div><br/>
+<button onclick="startCalibration()">Nochmal probieren</button><br/>
+<h2>Tipps fürs Schätzen</h2>
+<ul>
+	<li>Beginne mit einem unrealistisch großen Intervall. Dann denk darüber nach, welche Fakten du kennst, mit denen du es verkleinern kannst.</li>
+	<li>Stell dir ein Glücksrad vor, bei dem du bei 9 von 10 Feldern die Chance hast, zu gewinnen. Du kannst entweder 100 Euro auf dieses Glücksrad setzen oder darauf, dass deine Schätzung richtig ist. Versuche die Schätzung so zu wählen, dass du dich zwischen diesen beiden Varianten nicht entscheiden kannst. Wenn du eher das Glückrad wählen würdest, ist der geschätzte Bereich zu klein. Wenn du eher auf deine Schätzung setzen würdest, ist der geschätzte Bereich zu groß.</li>
+</ul>
+</div>
+
+</body>
+</html>

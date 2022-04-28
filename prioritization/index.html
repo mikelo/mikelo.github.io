@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Priority Sort</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="sort.js"></script>
+</head>
+<body>
+<div id="input">
+<h1>Online Prioritization Tool</h1>
+<p>To act effectively, it is often needed to rank a set of of items by importance. In many other situations, too, sorting or ranking items is useful. Psychological research shows that humans are better at comparing items than at estimating their importance one by one. Therefore, this tool lets you compare pairs of items to determine their order. There are two variants: <i>Double-out prioritization</i> is more efficient when you are mainly interested in the top items of the ranking, whereas <i>full sorting</i> needs more comparisons but gives equal weight to all parts of the ranking. Just paste your items in the textbox below and click the respective button to start.</p>
+
+<p>Items to rank (one per line):<br/>
+<textarea id="itemInput" cols="100"></textarea><br/>
+<button onclick="startRanking(fullSort)">Full ranking is relevant (full sort) >></button><br/>
+<button onclick="startRanking(doubleOutSort)">Upper part is more relevant (double-out ranking) >></button></p>
+
+<p>If you want to learn more about the double-out technique, read the <a href="https://en.wikipedia.org/wiki/Double-elimination_tournament">Wikipedia article on Double-Elimination Tournaments</a>. This tool is a service by <a href="http://tobias-baum.de">tobias-baum.de</a>.
+</div>
+
+<div id="comparison" style="display:none;">
+Click on the more important item:<br/><br/>
+<div id="cmp1" style="background-color:#99bbff;" onclick="choseCmp(1)">a</div> vs <div id="cmp2" style="background-color:#99bbff;" onclick="choseCmp(-1)">b</div>
+</div>
+
+<div id="output" style="display:none;">
+Result:<br/>
+<textarea id="itemOutput" cols="100"></textarea><br/>
+<button onclick="toggleDisplay()">Toggle display</button><br/>
+</div>
+
+</body>
+</html>

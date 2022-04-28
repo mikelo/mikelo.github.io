@@ -1,46 +1,936 @@
-<p>Michele Orlandi Cloud Solutions Engineer</p>
-<p>+393201117638</p>
-<p>Coming from Linux backend application maintenance and development transitioning to the microservices/containers paradigm.</p>
-<p>Particularly keen on cloud native solutions such as Helm charts and operators.</p>
-<p>PERSONAL INFORMATION Address: , , Nationality: Driving License: Hobbies:</p>
-<p>SOCIAL PROFILES * linkedin: https://www.linkedin.com/in/micheleorlandi/ * github: https://github.com/mikelo * acclaim: https://www.youracclaim.com/users/michele-orlandi/badges</p>
-<p>LANGUAGES ★★★★★ english ★★★★★ italian ★★★★★ spanish</p>
-<p>SKILLS ★☆☆☆☆</p>
-<p>WORK EXPERIENCE * February 2020 – Present Technical Sales at IBM Italia, Milan, Italy</p>
-<p>Red Hat Openshift Container Platform 4.x deployment support use case creation for IBM Cloud Pak for Application bundle weekly meeting experience sharing among colleagues currently preparing for the “Red Hat Certified Specialist in OpenShift Application Development exam” (EX288)</p>
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="no-js oldie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+
+   <!--- basic page needs
+   ================================================== -->
+   <meta charset="utf-8">
+	<title>Tobias Baum</title>
+	<meta name="description" content="Tobias Baum, software developer and researcher from Hannover, Germany">  
+	<meta name="author" content="Tobias Baum">
+
+   <!-- mobile specific metas
+   ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+ 	<!-- CSS
+   ================================================== -->
+   <link rel="stylesheet" href="css/base.css">
+   <link rel="stylesheet" href="css/vendor.min.css">
+   <link rel="stylesheet" href="css/main.css">     
+
+   <!-- script
+   ================================================== -->
+	<script src="js/modernizr.js"></script>
+
+   <!-- favicons
+	================================================== -->
+	<link rel="shortcut icon" href="favicon.png" >
+
+	<script type="text/javascript">
+	   function checkAndOpenResults() {
+			//do some dummy check so that non-participants and bots are less likely to go to the page
+			var s = prompt("Please enter your participant ID");
+			if (s != null && s.indexOf("R") >= 0 && s.length >= 3) {
+				window.location.href = "./results.html";
+			} else {
+				alert("Invalid participant ID!");
+			}
+			return false;
+	   }
+	</script>
+</head>
+
+<body>
+
+	<!-- header
+   ================================================== -->
+   <header id="main-header">
+
+   	<div class="row">
+
+	      <div class="logo">
+	         <a href="index.html">Tobias Baum</a>
+	      </div>
+
+	      <nav id="nav-wrap">         
+	         
+	         <a class="mobile-btn" href="#nav-wrap" title="Show navigation">
+	         	<span class="menu-icon">Menu</span>
+	         </a>
+         	<a class="mobile-btn" href="#" title="Hide navigation">
+         		<span class="menu-icon">Menu</span>
+         	</a>            
+
+	         <ul id="nav" class="nav">
+	            <li><a class="smoothscroll" href="#hero">Home.</a></li>
+		         <li class="current"><a class="smoothscroll" href="#research">Research.</a></li>
+	            <li><a class="smoothscroll" href="#links">Links.</a></li>
+	            <li><a class="smoothscroll" href="#contact">Contact.</a></li>
+	         </ul> <!-- end #nav -->
+
+	      </nav> <!-- end #nav-wrap -->
+
+	      <!--<ul class="header-social">
+	        	<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+	        	<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+	        	<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+	      </ul>-->      
+
+	   </div>
+
+   </header> <!-- end header -->
+
+
+   <!-- homepage hero
+   ================================================== -->
+   <section id="hero">	
+   	  
+		<div class="row hero-content">
+
+			<div class="twelve columns hero-container">
+
+			   <!-- hero-slider start-->
+			   <div id="hero-slider" class="flexslider">
+
+				   <ul class="slides">
+
+					   <!-- slide -->
+					   <li>
+						   <div class="flex-caption">
+								<h1 class="">Welcome to the website of Tobias Baum.
+								</h1>	
+									
+								<h3 class="">I'm a software developer and researcher from Hannover, Germany.</h3>				   
+							</div>						
+					   </li>
+
+					   <!-- slide -->
+					   <!--<li>						
+							<div class="flex-caption">
+								<h1 class="">We are a small design studio dedicated to build great digital
+									products.</h1>
+
+								<h3 class="">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</h3>			   
+							</div>					
+					   </li>-->
+
+					   <!-- slide -->
+					   <!--<li>
+						   <div class="flex-caption">
+								<h1 class="">Take a look at some of <a class="smoothscroll" href="#portfolio" title="portfolio" >our works</a> or 
+								<a class="smoothscroll" href="#contact" title="contact us">get in touch</a> to discuss how we can help you.</h1>
+
+								<h3 class="">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</h3>			   
+							</div>
+					   </li>-->					              
+
+				   </ul>
+
+			   </div> <!-- end hero-slider -->				   
+
+	      </div> <!-- end twelve columns-->
+
+		</div> <!-- end row -->	
+
+		<!--<div id="more">
+		      <a class="smoothscroll" href="#services">More About Us<i class="fa fa-angle-down"></i></a>
+		</div> 	-->
+
+   </section> <!-- end homepage hero -->
+
+
+   <!-- portfolio
+   ================================================== -->
+   <section id="research">
+
+      <div class="row section-head">
+
+      	<div class="twelve columns">
+
+      		<h1>My research<span>.</span></h1>
+
+	         <hr />               
+
+	         <p>My main research interest and the topic of my doctoral research is improving code reviews through computer support.
+			 I'm also interested in ways to improve software development with a focus on small and medium software companies with agile development processes.
+	         </p>
+
+	      </div>
+
+      </div> <!-- end section-head -->
+
+      <!--<div class="row items">
+
+         <!- - portfolio-wrapper - ->
+         <div id="portfolio-wrapper" class="bgrid-fourth s-bgrid-third tab-bgrid-half">
+
+            <div class="bgrid folio-item">
+               <div class="item-wrap">
+                  <a href="#modal-01">
+	                  <img src="images/portfolio/underwater.jpg" alt="Underwater">
+                     <div class="overlay"></div>                       
+                     <div class="portfolio-item-meta">
+     					      <h5>Underwater</h5>
+                        <p>Videography</p>
+     					   </div> 
+                     <div class="link-icon"><i class="fa fa-plus"></i></div>
+                  </a>
+               </div>
+        		</div> <!- - item end - ->
+
+            <div class="bgrid folio-item">
+               <div class="item-wrap">
+                  <a href="#modal-02">
+                     <img src="images/portfolio/hotel.jpg" alt="Hotel Sign">
+                     <div class="overlay">
+                      <div class="portfolio-item-meta">
+          					   <h5>Hotel Sign</h5>
+                           <p>Branding</p>
+          					</div>
+                     </div>
+                     <div class="link-icon"><i class="fa fa-plus"></i></div>
+                  </a>
+               </div>
+         	</div> <!- - item end - ->
+
+            <div class="bgrid folio-item">
+               <div class="item-wrap">
+                  <a href="#modal-03">
+                     <img src="images/portfolio/beetle.jpg" alt="Beetle">                        
+                     <div class="overlay">
+                      <div class="portfolio-item-meta">
+          					   <h5>Beetle</h5>
+                           <p>Webdesign</p>
+          					</div>
+                     </div>
+                     <div class="link-icon"><i class="fa fa-plus"></i></div>
+                  </a>
+               </div>
+         	</div> <!- - item end - ->
+
+            <div class="bgrid folio-item">
+               <div class="item-wrap">
+                  <a href="#modal-04">
+                     <img src="images/portfolio/banjo-player.jpg" alt="Banjo Player">
+                     <div class="overlay">
+                      <div class="portfolio-item-meta">
+          					   <h5>Banjo Player</h5>
+                           <p>Photography</p>
+          					</div>
+                     </div>
+                     <div class="link-icon"><i class="fa fa-plus"></i></div>
+                  </a>
+               </div>
+         	</div> <!- - item end - ->
+
+            <div class="bgrid folio-item">
+               <div class="item-wrap">
+                  <a href="#modal-05">
+                   <img src="images/portfolio/lighthouse.jpg" alt="Lighthouse">
+                     <div class="overlay">
+                      <div class="portfolio-item-meta">
+          					   <h5>Lighthouse</h5>
+                           <p>Web Development</p>
+          					</div>
+                     </div>
+                     <div class="link-icon"><i class="fa fa-plus"></i></div>
+                  </a>
+               </div>
+         	</div> <!-  item end - ->
+
+            <div class="bgrid folio-item">
+               <div class="item-wrap">
+                  <a href="#modal-06">
+                     <img src="images/portfolio/girl.jpg" alt="Girl Stuff">
+                     <div class="overlay">
+                      <div class="portfolio-item-meta">
+          					   <h5>Girl Stuff</h5>
+                           <p>Photography</p>
+          					</div>
+                     </div>
+                     <div class="link-icon"><i class="fa fa-plus"></i></div>
+                  </a>
+               </div>
+         	</div> <!- - item end - ->
+
+            <div class="bgrid folio-item">
+               <div class="item-wrap">
+                  <a href="#modal-07">                        
+                     <img src="images/portfolio/coffee.jpg" alt="Coffee Cup">                       
+                     <div class="overlay">
+                      <div class="portfolio-item-meta">
+          					   <h5>Coffee Cup</h5>
+                           <p>Branding</p>
+          					</div>
+                     </div>
+                     <div class="link-icon"><i class="fa fa-plus"></i></div>
+                  </a>
+               </div>
+         	</div> <!- - item end - ->
+
+            <div class="bgrid folio-item">
+               <div class="item-wrap">
+                  <a href="#modal-08">
+                     <img src="images/portfolio/judah.jpg" alt="Judah">
+                     <div class="overlay">
+                      	<div class="portfolio-item-meta">
+        					      <h5>Judah</h5>
+                           <p>Webdesign</p>
+        					   </div>
+                     </div>
+                     <div class="link-icon"><i class="fa fa-plus"></i></div>                     
+                  </a>
+               </div>
+       		</div>  <!- - item end - ->
+
+         </div> <!- - end portfolio-wrapper - ->
+         
+
+         <!- - modal popup
+	   	========================================================= - ->
+         <div id="modal-01" class="popup-modal mfp-hide">
+
+		      <div class="media">
+	      		<img src="images/portfolio/modals/m-underwater.jpg" alt="Underwater" />
+	      	</div>
+
+		      <div class="description-box">
+			      <h4>Underwater</h4>
+			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
+               <span class="categories">Videography</span>
+		      </div>
+
+            <div class="link-box group">
+            	<a href="http://www.behance.net">Details</a>
+            	<a href="#" class="popup-modal-dismiss">Close</a>         
+            </div>
+
+	      </div><!- - modal-01 end - ->
+
+         <div id="modal-02" class="popup-modal mfp-hide">
+
+		      <div class="media">
+	      		<img src="images/portfolio/modals/m-hotel.jpg" alt="Hotel Sign" />
+	      	</div>
+
+		      <div class="description-box">
+			      <h4>Hotel Sign</h4>
+			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
+               <span class="categories">Branding, Web Development</span>
+		      </div>
+
+            <div class="link-box">            	
+               <a href="http://www.behance.net">Details</a>
+		         <a href="#" class="popup-modal-dismiss">Close</a>
+            </div>
+
+	      </div><!- - modal-02 end - ->
+
+         <div id="modal-03" class="popup-modal mfp-hide">
+
+		      <div class="media">
+	      		<img src="images/portfolio/modals/m-beetle.jpg" alt="" />
+	      	</div>
+
+		      <div class="description-box">
+			      <h4>Beetle</h4>
+			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
+               <span class="categories">Webdesign</span>
+		      </div>
+
+            <div class="link-box">
+               <a href="http://www.behance.net">Details</a>
+		         <a href="#" class="popup-modal-dismiss">Close</a>
+            </div>
+
+	      </div><!- - modal-03 end - ->
+
+			<div id="modal-04" class="popup-modal mfp-hide">
+
+		      <div class="media">
+	      		<img src="images/portfolio/modals/m-banjo-player.jpg" alt="" />
+	      	</div>
+
+		      <div class="description-box">
+			      <h4>Banjo Player</h4>
+			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
+               <span class="categories">Photography</span>
+		      </div>
+
+            <div class="link-box">
+               <a href="http://www.behance.net">Details</a>
+		         <a href="#" class="popup-modal-dismiss">Close</a>
+            </div>
+
+	      </div><!- - modal-04 end - ->
+
+	      <div id="modal-05" class="popup-modal slider mfp-hide">	
+
+	      	<div class="media">
+	      		<img src="images/portfolio/modals/m-lighthouse.jpg" alt="" />
+	      	</div>      	
+
+		      <div class="description-box">
+			      <h4>Lighthouse</h4>		      
+
+			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
+
+			      <div class="categories">Web Development</div>
+               
+		      </div>
+
+            <div class="link-box">
+               <a href="http://www.behance.net">Details</a>
+		         <a href="#" class="popup-modal-dismiss">Close</a>
+            </div>		      
+
+	      </div><!- - modal-05 end - ->
+
+	      <div id="modal-06" class="popup-modal mfp-hide">
+
+		      <div class="media">
+	      		<img src="images/portfolio/modals/m-girl.jpg" alt="" />
+	      	</div>	
+
+		      <div class="description-box">
+			      <h4>Girl Stuff</h4>			      
+
+			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
+
+			      <div class="categories">Photography</div>
+               
+		      </div>
+
+            <div class="link-box">
+               <a href="http://www.behance.net">Details</a>
+		         <a href="#" class="popup-modal-dismiss">Close</a>
+            </div>
+
+	      </div><!- - modal-06 end - ->
+
+	      <div id="modal-07" class="popup-modal mfp-hide">
+
+		      <div class="media">
+	      		<img src="images/portfolio/modals/m-coffee.jpg" alt="" />
+	      	</div>	
+
+		      <div class="description-box">
+			      <h4>Coffee Cup</h4>			      
+
+			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
+
+			      <div class="categories">Branding</div>
+               
+		      </div>
+
+            <div class="link-box">
+               <a href="http://www.behance.net">Details</a>
+		         <a href="#" class="popup-modal-dismiss">Close</a>
+            </div>
+
+	      </div><!- - modal-07 end - ->
+
+	      <div id="modal-08" class="popup-modal mfp-hide">
+
+		      <div class="media">
+	      		<img src="images/portfolio/modals/m-judah.jpg" alt="" />
+	      	</div>	
+
+		      <div class="description-box">
+			      <h4>Judah</h4>			      
+
+			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
+
+			      <div class="categories">Webdesign</div>
+               
+		      </div>
+
+            <div class="link-box">
+               <a href="http://www.behance.net">Details</a>
+		         <a href="#" class="popup-modal-dismiss">Close</a>
+            </div>
+
+	      </div><!- - modal-08 end - ->
+
+      </div>  <!- - end row - ->
+
+   </section> <!- - end portfolio -->
+
+
+      <div class="row mobile-no-padding">      	
+
+	      <div class="service-list bgrid-third s-bgrid-half tab-bgrid-whole group">
+
+	      	<div class="bgrid">	               
+
+	            <h3>Cognitive-support code review tools : improved efficiency of change-based code review by guiding and assisting reviewers</h3>
+
+	            <div class="service-content">	                  
+		            <p>In my Ph.D. thesis, I combine the results from my earlier articles into a coherent whole and augment it with further results,
+                    for example a systematization of code reading techniques, an efficient algorithm to determine an optimal code order for reviewing,
+                    a description of the architecture of the CoRT code review tool, and, perhaps most importantly, a catalog of essential requirements
+                    for cognitive support code review tools.
+</p>
 <ul>
-<li>April 2014 – January 2020 Integration Engineer at IBM Italia, Milan, Italy</li>
+<li><a href="https://doi.org/10.15488/9164">Full thesis</a></li>
 </ul>
-<p>multiple financial institution client facing financial regulatory compliance proprietary software implementation migration of software/hardware risk management solutions financial job streams implementation bash/python scripts maintenance and development EJB API connection layer non-regression testing/application log troubleshooting pre/post ETL parallel processing dynamic XML read/write security/authentication layer implementation (SSO, LDAP, SSL, Active Directory) automation of processes subject to SLA Oracle DB and Red Hat Linux system configuration/housekeeping</p>
+
+	         	</div>  
+
+			</div> <!-- end bgrid -->
+
+	      	<div class="bgrid">	               
+
+	            <h3>GIMO: A Multi-Objective Anytime Rule Mining System to Ease Iterative Feedback from Domain Experts</h3>
+
+	            <div class="service-content">	                  
+		            <p>Data extracted from software repositories is used intensively in Software Engineering research, for example, to predict defects in source code. In our research in this area, with data from open source projects as well as an industrial partner, we noticed several shortcomings of conventional data mining approaches for classification problems: (1) Domain experts' acceptance is of critical importance, and domain experts can provide valuable input, but it is hard to use this feedback. (2) The evaluation of the model is not a simple matter of calculating AUC or accuracy. Instead, there are multiple objectives of varying importance, but their importance cannot be easily quantified. Furthermore, the performance of the model cannot be evaluated on a per-instance level in our case, because it shares aspects with the set cover problem. To overcome these problems, we take a holistic approach and develop a rule mining system that simplifies iterative feedback from domain experts and can easily incorporate the domain-specific evaluation needs. A central part of the system is a novel multi-objective anytime rule mining algorithm. The algorithm is based on the GRASP-PR meta-heuristic but extends it with ideas from several other approaches. We successfully applied the system in the industrial context. In the current article, we focus on the description of the algorithm and the concepts of the system. We provide an implementation of the system for reuse.
+</p>
 <ul>
-<li>December 2012 – March 2014 DevOps Engineer at Vodafone Italia, Milan, Italy HP FMS © support (fraud detection and analysis) Operating environment: • Tru64 UNIX, HP UX Software: • ANSI C/C, Oracle® • Call CDR and case archives via CORBA Detection modules: • SIM stuffing/IME/IMSI link • High destination/call forward set • Dynamic credit limit • Prepaid anomalies Analysis and reporting modules: • Subscriber/service fingerprint • Account analysis module • Billing investigator • Advanced analysis HP FMSSAS Integration/management modules:</li>
+<li><a href="https://doi.org/10.1016/j.eswax.2020.100040">Published article</a></li>
+<li><a href="https://arxiv.org/abs/1812.09746">Pre-print on arXiv</a></li>
+<li><a href="https://doi.org/10.6084/m9.figshare.7438676">Data set, source code and materials</a></li>
+<li><a href="https://github.com/tobiasbaum/GIMO-m/">GIMO-m on GitHub</a></li>
+<li><a href="https://youtu.be/7uz6UDfRyus">Talk about GIMO on YouTube</a></li>
 </ul>
-<p>CDR TAP decoding, SS7 integration, rating module, suspension management</p>
-<p>Profile tool</p>
-<p>SLA constrained on-call traffic extraction and system monitoring using  Remedy request system</p>
+
+	         	</div>  
+
+			</div> <!-- end bgrid -->
+
+	      	<div class="bgrid">	               
+
+	            <h3>An Industrial Case Study on Shrinking Code Review Changesets through Remark Prediction</h3>
+
+	            <div class="service-content">	                  
+		            <p>Change-based code review is used widely in industrial software development. Thus, research on tools that help the reviewer to achieve better review performance can have a high impact. We analyze one possibility to provide cognitive support for the reviewer: Determining the importance of change parts for review, specifically determining which parts of the code change can be left out from the review without harm. To determine the importance of change parts, we extract data from software repositories and build prediction models for review remarks based on this data. The approach is discussed in detail. To gather the input data, we propose a novel algorithm to trace review remarks to their triggers. We apply our approach in a medium-sized software company. In this company, we can avoid the review of 25% of the change parts and of 23% of the changed Java source code lines, while missing only about 1% of the review remarks. Still, we also observe severe limitations of the tried approach: Much of the savings are due to simple syntactic rules, noise in the data hampers the search for better prediction models, and some developers in the case company oppose the taken approach. Besides the main results on the mining and prediction of triggers for review remarks, we contribute experiences with a novel, multi-objective and interactive rule mining approach. The anonymized dataset from the company is made available, as are the implementations for the devised algorithms.</p>
 <ul>
-<li>September 2010 – October 2012 DevOps Engineer at H3G, Milan, Italy</li>
+<li><a href="https://arxiv.org/abs/1812.09510">Extended report on arXiv</a></li>
+<li><a href="https://doi.org/10.6084/m9.figshare.7438676">Data set, source code and materials</a></li>
 </ul>
-<p>monthly deployments of both mobile and fixed sites. daily troubleshooting and parameter configuration on the pre-production</p>
-<p>and testing environments based on tickets opened by QA team</p>
-<p>participation in weekly team coordination meetings technologies involved were:</p>
-<p>ORALCE weblogic/DB 11g, JAVA 6 APACHE with SSL module, TOMCAT, JETTY RedDot CMS ANT compilation tool configuration file diff using Beyond Compare StarTeam version control squid proxy server, tibco, bash VMware virtualized Red Hat, HP UX, Sun Solaris hosts</p>
+
+	         	</div>  
+
+			</div> <!-- end bgrid -->
+
+	      	<div class="bgrid">	               
+
+	            <h3>Associating Working Memory Capacity and Code Change Ordering with Code Review Performance</h3>
+
+	            <div class="service-content">	                  
+		            <p>Change-based code review is a software quality assurance technique that is widely used in practice. Therefore, better understanding what influences performance in code reviews and finding ways to improve it can have a large impact.
+In this study, we examine the association of working memory capacity and cognitive load with code review performance and we test the predictions of a recent theory regarding improved code review efficiency with certain code change part orders.
+We perform a confirmatory experiment with 50 participants, mostly professional software developers. The participants performed code reviews on one small and two larger code changes from an open source software system to which we had seeded additional defects. We measured their efficiency and effectiveness in defect detection, their working memory capacity, and several potential confounding factors.
+We find that there is a moderate association between working memory capacity and the effectiveness of finding delocalized defects, influenced by other factors, whereas the association with other defect types is almost non-existing. We also confirm that the effectiveness of reviews is significantly larger for small code changes. We cannot conclude reliably whether the order of presenting the code change parts influences the efficiency of code review.
+</p>
 <ul>
-<li>June 2008 – September 2010 DevOps Engineer at Fastweb, Milan, Italy</li>
+<li><a href="rp/memoryCodeOrderAndReview.pdf">Pre-print</a></li>
+<li><a href="https://doi.org/10.1007/s10664-018-9676-8">Research Paper (DOI: 10.1007/s10664-018-9676-8)</a></li>
+<li><a href="https://doi.org/10.6084/m9.figshare.5808609.v1">Data set and other materials</a></li>
 </ul>
-<p>application support/Operations in Mediation, billing and interconnection support, shell scripts creation telephone traffic extraction, discards management. interconnection/operator traffic analysis. Large account traffic extraction and pre-billing. routine system checks, monitoring and testing of billing-bound charging systems MVNO charging system implementation and maintenance participation in weekly meetings for operation planning sqlplus/sqlldr (oracle 9i) overnight traffic selection/loading (in CSV format) Microsoft excel automatic report automatic HTML formatted mail reports 24/7 on-call monitoring of local FS/SAN, process cores, memory on high-availability Sun OS, HP UX systems performance tests</p>
+
+	         	</div>  
+
+			</div> <!-- end bgrid -->
+
+	      	<div class="bgrid">	               
+
+	            <h3>Culture is Key: Results of a Survey on Factors Influencing Code Review Adoption</h3>
+
+	            <div class="service-content">	                  
+		            <p>Our recent survey on the use of code review in practice provided further
+					evidence that culture is an important factor when teams do not do code reviews
+					at all. At the 56th CREST Open Workshop, I held a talk on this subject, and the
+					great folks at UCL created a video of the talk.</p>
 <ul>
-<li>December 2007 – June 2008 Secondary school Teacher at IPSSCT “F. CASTOLDI”, Vigevano, Italy</li>
+<li><a href="http://crest.cs.ucl.ac.uk/cow/56/">Website of 56th COW</a></li>
+<li><a href="rp/cultureIsKey_cow56_2017_tb.pdf">Slides as PDF</a></li>
 </ul>
-<p>introduction to computer systems installation of Linux systems on unused machines for demonstration purposes. lectures on early computer systems using class-participation teaching method. monthly discussions with other teachers on students’ performance.</p>
+
+	         	</div>  
+
+			</div> <!-- end bgrid -->
+
+	      	<div class="bgrid">	               
+
+	            <h3>The Choice of Code Review Process: A Survey on the State of the Practice</h3>
+
+	            <div class="service-content">	                  
+		            <p>Code review has been known to be an effective quality assurance
+technique for decades. In the last years, industrial code review
+practices were observed to converge towards “change-based/modern code
+review”, but with a lot of variation in the details of the processes. Recent
+research also proposed hypotheses on factors that influence the choice of
+process. However, all current research in this area is based on small and
+largely non-random samples of cases. Therefore, we set out to assess the
+current state of the practice and to test some of these hypotheses with
+a survey among commercial software development teams. We received
+responses from 240 teams. They support many of the stated hypotheses,
+e.g., that change-based code review is the dominating style of code
+review in the industry, and that teams doing change-based code review
+have a lower risk that review use fades away. However, other hypotheses
+could not be confirmed, mainly that the balance of effects a team tries to
+reach with code reviews acts as a mediator in determining the details of
+the review process. Apart from these findings, we contribute the survey
+data set as a foundation for future research.</p>
 <ul>
-<li>April 2007 – January 2008 Java/J2SE Developer at Xteque srl, Turin, Italy Creation and implementation of a VNC/SSH client. The application had to have the following features (among others):</li>
+<li><a href="rp/stateofpractice.pdf">Pre-print</a></li>
+<li><a href="https://doi.org/10.1007/978-3-319-69926-4_9">Research Paper (DOI: 10.1007/978-3-319-69926-4_9)</a></li>
+<li><a href="https://doi.org/10.6084/m9.figshare.5104249.v1">Data set and other materials</a></li>
 </ul>
-<p>it had to be written using the “Java Swing” framework thus resulting in a multi-platform JAR executable provide a login screen to a VNC enabled remote server automatic screen resolution adjustment upon connection SFTP client to exchange files with the remote server through a GUI the code was versioned and shared with the rest of the team using CVS</p>
+
+	         	</div>  
+
+			</div> <!-- end bgrid -->
+
+
+	      	<div class="bgrid">	               
+
+	            <h3>On the Optimal Order of Reading Source Code Changes for Review</h3>
+
+	            <div class="service-content">	                  
+		            <p>Change-based code review, e.g., in the form of pull
+requests, is the dominant style of code review in practice. An
+important option to improve review’s efficiency is cognitive
+support for the reviewer. Nevertheless, review tools present the
+change parts under review sorted in alphabetical order of file
+path, thus leaving the effort of understanding the construction,
+connections, and logic of the changes on the reviewer. This leads
+to the question: How should a code review tool order the parts
+of a code change to best support the reviewer? We answer
+this question with a middle-range theory, which we generated
+inductively in a mixed methods study, based on interviews, an
+online survey, and existing findings from related areas. Our
+results indicate that an optimal order is mainly an optimal
+grouping of the change parts by relatedness. We present our
+findings as a collection of principles and formalize them as a
+partial order relation among review orders.</p>
 <ul>
-<li>May 2005 – July 2006 Quality Rater at Google, remote</li>
+<li><a href="rp/optimalordering.pdf">Pre-print</a></li>
+<li><a href="https://doi.org/10.1109/ICSME.2017.28">Research Paper (DOI: 10.1109/ICSME.2017.28)</a></li>
+<li><a href="https://doi.org/10.6084/m9.figshare.5236150.v1">Materials</a></li>
 </ul>
-<p>classification of web pages providing “human” interpretation of queries linking of queries according to predefined criteria reporting of anomalies such as spamming and malicious sites creation of reports giving reasoning for each rating in relation to the cultural aspects involved in a particular query multi-browser testing</p>
-<p>EDUCATION * April 2007 Università degli Studi di Pavia, Pavia, Italy Master’s Degree (Vecchio Ordinamento) in Computer Science Engineering</p>
-<p>CERTIFICATIONS AND COURSES * on-site course on Big Data implementation, London, UK, June 2018 * RED HAT ACCREDITED PROFESSIONAL, , September 2020 – Present</p>
-<p>Red Hat Delivery Specialist - Container Platform Application Deployment  Red Hat Delivery Specialist - Container Platform Deployment  Red Hat Sales Engineer Specialist - Cloud-Native Development  Red Hat Sales Engineer Specialist - Container Platform</p>
+
+	         	</div>  
+
+			</div> <!-- end bgrid -->
+
+
+	      	<div class="bgrid">	               
+
+	            <h3>On the Need for a New Generation of Code Review Tools</h3>
+
+	            <div class="service-content">	                  
+		            <p>Tool support for change-based code review is gaining widespread
+acceptance in the industry. This indicates that the current generation
+of tools is well-aligned to current code review practices. Nevertheless,
+we believe that further improvements in code review tooling can
+lead to increased review efficiency and effectiveness. In this paper, we
+combine results from a qualitative study and results from the literature
+to substantiate this claim. We derive promising improvement areas and
+provide an overview of existing research in these areas. A common attribute
+of these improvements is that they trade 
+flexibility for reviewer support. As flexibility is one of the main characteristics of the current
+generation of code review tools in Hedberg's classification of review tool
+generations, we regard these coming tools as part of a new generation of
+code review tools.</p>
+<ul>
+<li><a href="rp/reviewtools.pdf">Pre-print</a></li>
+<li><a href="http://dx.doi.org/10.1007/978-3-319-49094-6_19">Research Paper (DOI: 10.1007/978-3-319-49094-6_19)</a></li>
+</ul>
+
+	         	</div>  
+
+			</div> <!-- end bgrid -->
+			
+			
+	      	<div class="bgrid">	               
+
+	            <h3>A Faceted Classification Scheme for Change-Based Industrial Code Review Processes</h3>
+
+	            <div class="service-content">	                  
+		            <p>Code review in the industry today is different to code review twenty years ago. The process has become more lightweight, reviews are performed frequently and change-based and the use of specialized tools is increasing. An accurate view of the current state of the industrial practice is an indispensable foundation for improving it. Most recent descriptions of review practices come from a limited population of large high-tech companies. Therefore, we used interviews with software engineering professionals from a broad sample of 19 companies to gain insight into their code review practices. We augmented our findings with data for 11 companies found through a semi-systematic literature review. There are many commonalities in the code review processes of these companies, but also a lot of variation in the details. A simple process taxonomy cannot describe these variations adequately. Therefore, we present a faceted classification scheme that is grounded in our observations.
+</p>
+<ul>
+<li><a href="rp/classification.pdf">Research Paper (preprint)</a></li>
+<li><a href="http://dx.doi.org/10.1109/QRS.2016.19">Research Paper (DOI: 10.1109/QRS.2016.19)</a></li>
+</ul>
+<!--<a href="http://www.se.uni-hannover.de/pub/File/pdfpapers/Baum2015.pdf">Research Paper</a><br/>-->
+
+	         	</div>  
+
+			</div> <!-- end bgrid -->
+	      	<div class="bgrid">	               
+
+	            <h3>Factors Influencing Code Review Processes in Industry</h3>
+
+	            <div class="service-content">	                  
+		            <p>Code review is known to be an efficient quality assurance technique. Many software companies today use it, usually with a process similar to the patch review process in open source software development. However, there is still a large fraction of companies performing almost no code reviews at all. And the companies that do code reviews have a lot of variation in the details of their processes. For researchers trying to improve the use of code reviews in industry, it is important to know the reasons for these process variations. We have performed a grounded theory study to clarify process variations and their rationales. The study is based on interviews with software development professionals from 19 companies. These interviews provided insights into the reasons and influencing factors behind the adoption or non-adoption of code reviews as a whole as well as for different process variations. We have condensed these findings into seven hypotheses and a classification of the influencing factors. Our results show the importance of cultural and social issues for review adoption. They trace many process variations to differences in development context and in desired review effects.
+</p>
+<!--<a href="http://www.se.uni-hannover.de/pub/File/pdfpapers/Baum2015.pdf">Research Paper</a><br/>-->
+<ul>
+<li><a href="http://dl.acm.org/authorize?N27529">Research Paper</a></li>
+<li><a href="rp/detailedTable.pdf">Detailed table with Review Effects (Team Level) and their Connections to Contextual Factors and Process Variants</a></li>
+<li><a href="rp/interviewGuideFirst.pdf">Version of the interview guide used for the first interview</a></li>
+<li><a href="rp/interviewGuideLast.pdf">Version of the interview guide used for the last interview</a></li>
+</ul>
+	         	</div>  
+
+			</div> <!-- end bgrid -->
+			
+			
+	      	<div class="bgrid">	               
+
+	            <h3>Comparing Pre Commit Reviews and Post Commit Reviews Using Process Simulation</h3>
+
+	            <div class="service-content">	                  
+		            <p>Code review in practice is often performed change-based,
+i.e. using the code changes belonging to a task to determine
+which code to review. In previous studies, it was found
+that two variations of this process are used in industry: Pre
+commit review (review-then-commit) and post commit review
+(commit-then-review). The choice for one of these variants
+has implications not only for practitioners deciding on
+a code review process to use, but also for the development of
+review tools and for experimentation with review processes.
+In some situations, a specific variant is clearly preferable due
+to the nature of the development process or team. In other
+situations, there are conflicting opinions, and both variants
+have proponents arguing for their method of choice. So we
+asked: Are there practically relevant performance differences
+between pre commit and post commit reviews, and how are
+these differences influenced by contextual factors? To assess
+this question, we designed a parametric discrete event
+simulation model of certain agile development processes. We
+validated this model with practitioner's feedback and in part
+also with empirical data from industry. Our analysis of the
+simulation results indicates that the best choice does depend
+on the context, but also that there are many situations with
+no practically relevant difference between both choices. We
+identified the main influencing factors and underlying effects
+and condensed our findings into heuristic rules.</p>
+<ul>
+<li><a href="http://dl.acm.org/authorize?N04939">Research Paper</a></li>
+<li><a href="https://github.com/FG-SE/PrePostReviewProcessSimulation/releases/tag/v1.0">Additional study materials</a></li>
+<li><a href="http://dx.doi.org/10.1002/smr.1865">Extended version in journal JSEP</a></li>
+</ul>
+	         	</div>  
+
+			</div> <!-- end bgrid -->
+			
+			
+	      	<div class="bgrid">	               
+
+	            <h3>Leveraging pre-commit hooks for context-sensitive checklists: a case study</h3>
+
+	            <div class="service-content">	                  
+		            <p>The need to increase the efficiency of software development creates a demand
+for unobtrusive in-process means of software quality assurance that align well
+with agile processes. Many version control system clients provide facilities for running
+scripts or other executables before a change is committed to the repository. These
+”pre-commit hooks” can be client-side or server-side, both having distinct advantages.
+Client-side pre-commit hooks are well suited to implement context-sensitive checklists
+and automatic quality checks, but their potential has not been fully realized in practice
+and corresponding research is missing. To narrow this gap, we did an industrial
+case study on this use of client-side pre-commit hooks. The case study used the tool
+”TortoiseChecklist” and was focused on increasing continuous integration build stability.
+The results were positive, with a notable increase in stability and no significant
+disadvantages noticed.</p>
+<ul>
+<li><a href="http://www.se.uni-hannover.de/pub/File/pdfpapers/Baum2015.pdf">Research Paper</a></li>
+<li><a href="https://github.com/tobiasbaum/TortoiseChecklist">Code on GitHub</a></li>
+</ul>
+	         	</div>  
+
+			</div> <!-- end bgrid -->
+
+
+	      </div> <!-- end service-list -->	      
+
+      </div> <!-- end row -->      
+
+   </section> <!-- end services -->
+
+
+   <section id="links">
+
+   	<div class="row section-head">
+
+      	<div class="twelve columns">
+
+      		<h1>Links<span>.</span></h1>
+
+	         <hr />     	    
+
+	         <p>
+			 <ul>
+			 <li><a href="http://www.github.com/tobiasbaum/reviewtool">CoRT - Code Review Tool</a></li>
+			 <li><a href="http://www.se.uni-hannover.de/pages/de:mitarbeiter_tobias_baum">My page on the Leibniz university homepage</a></li>
+			 <li><a href="http://www.github.com/tobiasbaum">My GitHub repositories</a></li>
+			 <li><a href="http://meet-hub-hannover.de">Meet-Hub-Hannover</a>, a site providing an overview of user groups and similar technical communities in Hannover</li>
+			 <li><a href="http://www.set.de">SET GmbH</a></li>
+			 </ul>
+	         </p>
+	      </div>
+
+      </div>
+
+
+   </section> <!-- end about -->  
+
+   <section id="links">
+
+   	<div class="row section-head">
+
+      	<div class="twelve columns">
+
+      		<h1>Online Tools<span>.</span></h1>
+
+	         <hr />     	    
+
+	         <p>
+			 <ul>
+			 <li><a href="prioritization/index.html">Online Prioritization/Ranking Tools</a></li>
+			 <li><a href="prioritization/quantitative.html">Quantitative Pairwise Ranking</a></li>
+			 <li><a href="pareto.html">Probabilistic Pareto Ranking</a></li>
+			 <li><a href="interval-estimator-training/index.html">Interval Estimator Training</a></li>
+			 <li><a href="dot-voting/index.html">Distributed Dot Voting</a></li>
+			 <li><a href="distributed-estimation/index.html">Distributed Value Estimation</a></li>
+			 <li><a href="ideenmesse/index.html">Distributed Idea Feedback Session</a></li>
+			 <li><a href="cardSorting.html">Online Card Sorting</a></li>
+			 <li><a href="longSentences.html">Long Sentence Finder</a></li>
+			 <li><a href="detexify.html">Detexify</a></li>
+			 <li><a href="orderingPrinciples.html">BBS Ordering Principles</a></li>
+			 <li><a href="https://www.3dberater.de/">3D printing expert system</a></li>
+			 <li><a href="http://v2202012136631136755.bestsrv.de:4567/">Code Training</a></li>
+			 </ul>
+	         </p>
+
+	      </div>
+
+      </div>
+
+
+   </section> <!-- end about -->  
+
+
+   <!-- contact
+   ================================================== -->
+   <section id="contact">
+
+   	<div class="row section-head">
+
+   		<div class="twelve columns">
+
+	         <h1>Get In Touch With Me<span>.</span></h1>
+
+	         <hr />	        
+
+	      </div>
+
+      </div> <!-- end section-head -->
+
+      <div class="row">
+      	
+      	<!--<div id="contact-form" class="six columns tab-whole left">
+
+            <!- - form - ->
+            <form name="contactForm" id="contactForm" method="post" action=""  >
+      			<fieldset>
+
+                  <div class="group">
+ 						   <input name="contactName" type="text" id="contactName" placeholder="Name" value="" minLength="2" required />
+                  </div>
+                  <div>
+	      			   <input name="contactEmail" type="email" id="contactEmail" placeholder="Email" value="" required />
+	               </div>
+                  <div>
+	     				   <input name="contactSubject" type="text" id="contactSubject" placeholder="Subject"  value="" />
+	               </div>                       
+                  <div>
+	                 	<textarea name="contactMessage"  id="contactMessage" placeholder="message" rows="10" cols="50" required ></textarea>
+	               </div>                      
+                  <div>
+                     <button class="submitform">Submit</button>
+                     <div id="submit-loader">
+                        <div class="text-loader">Sending...</div>                             
+       				      <div class="s-loader">
+								  	<div class="bounce1"></div>
+								  	<div class="bounce2"></div>
+								  	<div class="bounce3"></div>
+								</div>
+							</div>
+                  </div>
+
+      			</fieldset>
+      		</form> <!- - Form End - ->
+
+            <!- - contact-warning - ->
+            <div id="message-warning"></div>
+            <!- - contact-success - ->
+      		<div id="message-success">
+               <i class="icon-ok"></i>Your message was sent, thank you!<br />
+      		</div>
+
+         </div>-->
+
+         <div class="six columns tab-whole right">
+
+            <p>Twitter: <a href="https://twitter.com/tb_luh">@tb_luh</a><br/>
+			University mail: tobias.baum at inf.uni-hannover.de</p>
+		 
+			<p>ORCID ID: <a href="http://orcid.org/0000-0003-3623-5349">orcid.org/0000-0003-3623-5349</a></p>
+			
+	         <p>
+            Tobias Baum</br>
+            Wittekamp 27</br>
+            30163 Hannover
+            </p>
+
+         </div>     	
+
+      </div> <!-- end row -->     
+
+   </section>  <!-- end contact -->
+
+
+   <!-- Footer
+   ================================================== -->
+   <footer>
+
+      <div class="row">  
+
+         <ul class="copyright">
+         	<li>Design by <a href="http://www.styleshout.com/">Styleshout.</a>.</li>
+         </ul>
+
+         <div id="go-top">
+            <a class="smoothscroll" title="Back to Top" href="#hero">Back to Top<i class="fa fa-angle-up"></i></a>
+         </div>
+
+      </div> <!-- end row -->
+
+   </footer> <!-- end footer -->
+
+   <div id="preloader"> 
+    	<div id="loader"></div>
+   </div> 
+
+   <!-- Java Script
+   ================================================== --> 
+   <script src="js/jquery-1.11.3.min.js"></script>
+   <script src="js/jquery-migrate-1.2.1.min.js"></script>
+   <script src="js/jquery.flexslider-min.js"></script>
+   <script src="js/jquery.waypoints.min.js"></script>
+   <script src="js/jquery.validate.min.js"></script>
+   <script src="js/jquery.fittext.js"></script>
+   <script src="js/jquery.placeholder.min.js"></script>
+   <script src="js/jquery.magnific-popup.min.js"></script>  
+   <script src="js/main.js"></script>
+
+</body>
+
+</html>
