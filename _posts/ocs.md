@@ -1,45 +1,41 @@
-= End-to-end infra node installation of OCS on OCP
-// :icons: font
-:source-language: shell
-:numbered:
-// Activate experimental attribute for Keyboard Shortcut keys
-:experimental:
-:source-highlighter: pygments
+---
+layout: post
+title: End-to-end infra node installation of OCS on OCP
+---
 
-== Overview
+## Overview
 
-This guide aims to provide a fairly quick procedure for the task at hand and is based mostly on Red Hat's training lab:
+This guide aims to provide a fairly quick procedure for the task at hand and is based mostly on Red Hat’s training lab:
 
 `https://red-hat-storage.github.io/ocs-training/training/ocs4/ocs.html`
 
 It tries to include all the steps starting from an actual installation of the OCP cluster on AWS and put OCS on top of that, up until a performance test which can be run at the end to verify that we have a working environment.
 
-NOTE: We explicitly install the OCS part directly on infrastructure nodes, this will leave the 3 worker nodes available for any applications that will eventually make use this storage. Monitoring applications are also moved to these infra nodes.
+**📌 NOTE**\
+We explicitly install the OCS part directly on infrastructure nodes, this will leave the 3 worker nodes available for any applications that will eventually make use this storage. Monitoring applications are also moved to these infra nodes.
 
-[[labexercises]]
+## Openshift installation on AWS cloud
 
-== Openshift installation on AWS cloud
-
-=== Verify your AWS environment
+### Verify your AWS environment
 
 We need to check that our AWS account is configured correctly:
 
-[source,role="execute"]
-----
+```shell
 export AWS_PROFILE=[your AWS username goes here]
 aws configure get region
-----
-.Example output:
-----
+```
+**Example output:**
+
+```shell
 eu-central-1
-----
-=== Create your install-config.yaml
-[source,role="execute"]
-----
+```
+### Create your install-config.yaml
+```shell
 openshift-install create install-config --log-level info
-----
-.Example output:
-----
+```
+**Example output:**
+
+```shell
 ? SSH Public Key <none>
 ? Platform  [Use arrows to move, enter to select, type to filter, ? for more help]
 > aws
@@ -48,7 +44,7 @@ openshift-install create install-config --log-level info
   openstack
   ovirt
   vsphere
-----
+```
 This will create a file such as the one below that will be used during the installation:
 ```yaml
 apiVersion: v1
@@ -86,34 +82,35 @@ pullSecret: '{"auths":{"cloud.openshift.com":{"auth":"...","email":"..."},"quay.
 === Actual installation of the cluster
 
 Back up the install-config.yaml before you begin the installation 
-[source,role="execute"]
-----
+```shell
 cp install-config.yaml install-config.default.yaml
-----
-WARNING: openshift-install will remove this file when the installation starts
+```
+**⚠️ WARNING**\
+openshift-install will remove this file when the installation starts
 
 We are now ready to begin the installation:
-[source,role="execute"]
-----
+```shell
 openshift-install create cluster --log-level debug
-----
-.Example output:
-----
+```
+**Example output:**
+
+```shell
 DEBUG OpenShift Installer 4.6.16                   
 DEBUG Built from commit 8a1ec01353e68cb6ebb1dd890d684f885c33145a 
 DEBUG Fetching Metadata...                         
 DEBUG Loading Metadata...                          
 DEBUG   Loading Cluster ID...   
 ...
-----
+```
 You can check instance creation from the AWS side of things:
 
-image::instances.png[instances created from the AWS console]
+![instances created from the AWS console](instances.png)
 
 If all goes well you should get this:
 
-.Example output:
-----
+**Example output:**
+
+```shell
 ...
 DEBUG Still waiting for the cluster to initialize: Cluster operator authentication is reporting a failure: WellKnownReadyControllerDegraded: kube-apiserver oauth endpoint https://10.0.140.185:6443/.well-known/oauth-authorization-server is not yet served and authentication operator keeps waiting (check kube-apiserver operator, and check that instances roll out successfully, which can take several minutes per instance) 
 DEBUG Still waiting for the cluster to initialize: Cluster operator authentication is reporting a failure: WellKnownReadyControllerDegraded: need at least 3 kube-apiservers, got 2 
@@ -133,15 +130,15 @@ DEBUG                API: 7s
 DEBUG  Bootstrap Destroy: 59s                      
 DEBUG  Cluster Operators: 16m48s                   
 INFO Time elapsed: 34m58s              
-----
+```
 We can also check the installation progress as soon as the API is up:
-[source,role="execute"]
-----
+```shell
 export KUBECONFIG=/home/$USER/install/auth/kubeconfig
 oc get co
-----
-.Example output in case of successful installation:
-----
+```
+**Example output in case of successful installation:**
+
+```shell
 NAME                                       VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE
 authentication                             4.6.16    True 	     False         False	  2m59s
 cloud-credential                           4.6.16    True        False         False	  29m
@@ -173,105 +170,103 @@ operator-lifecycle-manager-catalog         4.6.16    True        False         F
 operator-lifecycle-manager-packageserver   4.6.16    True        False         False	  18m
 service-ca                                 4.6.16    True        False         False	  23m
 storage                                    4.6.16    True        False         False	  23m
-----
+```
 
-== Deploy your storage backend using the OCS operator
+## Deploy your storage backend using the OCS operator
 
-=== Scale OCP cluster and add new infra worker nodes
+### Scale OCP cluster and add new infra worker nodes
 
 In this section, you will first validate the OCP environment has 2 or 3 worker
 nodes before increasing the cluster size by additional 3 worker nodes for OCS
 resources. The `NAME` of your OCP nodes will be different than shown below.
 
-[source,role="execute"]
-----
+```shell
 oc get nodes -l node-role.kubernetes.io/worker -l '!node-role.kubernetes.io/master'
-----
-.Example output:
-----
+```
+**Example output:**
+
+```shell
 NAME                                            STATUS   ROLES    AGE   VERSION
 ip-10-0-129-119.eu-central-1.compute.internal   Ready    worker   17m   v1.19.0+e49167a
 ip-10-0-185-158.eu-central-1.compute.internal   Ready    worker   20m   v1.19.0+e49167a
 ip-10-0-209-48.eu-central-1.compute.internal    Ready    worker   17m   v1.19.0+e49167a
-----
+```
 
-Now you are going to add 3 more OCP infra nodes to cluster using *machinesets*.
+Now you are going to add 3 more OCP infra nodes to cluster using **machinesets**.
 
-[source,role="execute"]
-----
+```shell
 oc get machinesets -n openshift-machine-api
-----
+```
 
-This will show you the existing *machinesets* used to create the 2 or 3 worker
-nodes in the cluster already. There is a *machineset* for each of 3 AWS
+This will show you the existing **machinesets** used to create the 2 or 3 worker
+nodes in the cluster already. There is a **machineset** for each of 3 AWS
 Availability Zones (AZ). 
-NOTE: In the case of only 2 workers one of the *machinesets* will not have any
+NOTE: In the case of only 2 workers one of the **machinesets** will not have any
 machines (i.e., DESIRED=0) created.
 
-.Example output:
-----
+**Example output:**
+
+```shell
 NAME                                    DESIRED   CURRENT   READY   AVAILABLE   AGE
 CLUSTERID-ltkvj-worker-eu-central-1a   1         1         1       1           32m
 CLUSTERID-ltkvj-worker-eu-central-1b   1         1         1       1           32m
 CLUSTERID-ltkvj-worker-eu-central-1c   1         1         1       1           32m
-----
+```
 
-Create new *MachineSets* that will in turn create storage-specific nodes for
+Create new **MachineSets** that will in turn create storage-specific nodes for
 your OCP cluster in the AWS AZs:
 
 We are now ready to load two important variables for our OCS deployment.
 
-[source,role="execute"]
-----
+```shell
 CLUSTERID=$(oc get machineset -n openshift-machine-api -o jsonpath='{.items[0].metadata.labels.machine\.openshift\.io/cluster-api-cluster}')
 RHCOS=$(aws ec2 describe-images --filters "Name=name,Values=rhcos-4*" --query 'sort_by(Images, &CreationDate)[-1].ImageId' --output text)
-----
+```
 
-Having taken inspiration from here `https://docs.openshift.com/container-platform/4.5/machine_management/creating-infrastructure-machinesets.html` we will now create 3 new *MachineSets* that will run storage-specific *infra* nodes for your OCP cluster:
+Having taken inspiration from here `https://docs.openshift.com/container-platform/4.5/machine_management/creating-infrastructure-machinesets.html` we will now create 3 new **MachineSets** that will run storage-specific **infra** nodes for your OCP cluster:
 
-[source,role="execute"]
-----
+```shell
 curl -s https://raw.githubusercontent.com/mikelo/mikelo.github.io/master/ocs/cluster-workerocs-eu-central-1-infra.yaml | sed -e "s/CLUSTERID/${CLUSTERID}/g" | sed -e "s/RHCOS/${RHCOS}/g" | oc apply -f -
-----
+```
 
-Check that you have new *machines* created.
+Check that you have new **machines** created.
 
-[source,role="execute"]
-----
+```shell
 oc get machines -n openshift-machine-api | egrep 'NAME|workerocs'
-----
-.Example output:
-----
+```
+**Example output:**
+
+```shell
 NAME                                             PHASE     TYPE         REGION         ZONE            AGE
 $CLUSTERID-ltkvj-workerocs-eu-central-1a-7lrkm   Running   m5.4xlarge   eu-central-1   eu-central-1a   6m26s
 $CLUSTERID-ltkvj-workerocs-eu-central-1b-jzsnz   Running   m5.4xlarge   eu-central-1   eu-central-1b   6m26s
 $CLUSTERID-ltkvj-workerocs-eu-central-1c-hkj8n   Running   m5.4xlarge   eu-central-1   eu-central-1c   6m26s
-----
+```
 
 They will be in `Provisioning` at first and eventually in a `Running` PHASE.
-NOTE: workerocs *machines* are using the AWS EC2 instance type `m5.4xlarge` which has 16 cpus and 64 GB memory.
+NOTE: workerocs **machines** are using the AWS EC2 instance type `m5.4xlarge` which has 16 cpus and 64 GB memory.
 
-Now you want to see if our new *machines* are added to the OCP cluster.
+Now you want to see if our new **machines** are added to the OCP cluster.
 
-[source,role="execute"]
-----
+```shell
 oc get machinesets -n openshift-machine-api | egrep 'NAME|workerocs'      
-----
-.Example output:
-----
+```
+**Example output:**
+
+```shell
 NAME                                       DESIRED   CURRENT   READY   AVAILABLE   AGE
 $CLUSTERID-ltkvj-workerocs-eu-central-1a   1         1         1       1           7m22s
 $CLUSTERID-ltkvj-workerocs-eu-central-1b   1         1         1       1           7m22s
 $CLUSTERID-ltkvj-workerocs-eu-central-1c   1         1         1       1           7m22s
-----
+```
 
 Check the nodes as shown below:
-[source,role="execute"]
-----
+```shell
 oc get nodes -l node-role.kubernetes.io/worker -l '!node-role.kubernetes.io/master'
-----
-.Example output:
-----
+```
+**Example output:**
+
+```shell
 NAME                                            STATUS   ROLES          AGE     VERSION
 ip-10-0-129-119.eu-central-1.compute.internal   Ready    worker         45m     v1.19.0+e49167a
 ip-10-0-138-77.eu-central-1.compute.internal    Ready    infra,worker   3m17s   v1.19.0+e49167a
@@ -279,146 +274,156 @@ ip-10-0-181-225.eu-central-1.compute.internal   Ready    infra,worker   3m16s   
 ip-10-0-185-158.eu-central-1.compute.internal   Ready    worker         48m     v1.19.0+e49167a
 ip-10-0-200-230.eu-central-1.compute.internal   Ready    infra,worker   3m19s   v1.19.0+e49167a
 ip-10-0-209-48.eu-central-1.compute.internal    Ready    worker         45m     v1.19.0+e49167a
-----
+```
 
-=== Installing the OCS operator
+### Installing the OCS operator
 
 In this section you will be using three of the worker OCP 4 nodes to deploy
 OCS 4 using the OCS Operator in OperatorHub. The following will be installed:
 
-- An OCS *OperatorGroup*
-- An OCS *Subscription*
-- All other OCS resources (Operators, Ceph Pods, NooBaa Pods, StorageClasses)
+* An OCS **OperatorGroup**
+* An OCS **Subscription**
+* All other OCS resources (Operators, Ceph Pods, NooBaa Pods, StorageClasses)
 
 Start with creating the `openshift-storage` namespace.
 
-[source,role="execute"]
-----
+```shell
 oc create namespace openshift-storage
-----
+```
 
 You must add the monitoring label to this namespace. This is required to get
 prometheus metrics and alerts for the OCP storage dashboards. To label the
 `openshift-storage` namespace use the following command:
 
-[source,role="execute"]
-----
+```shell
 oc label namespace openshift-storage "openshift.io/cluster-monitoring=true"
-----
+```
 
-NOTE: The creation of the `openshift-storage` namespace, and the monitoring
+**📌 NOTE**\
+The creation of the `openshift-storage` namespace, and the monitoring
 label added to this namespace, can also be done during the OCS operator
-installation using the *Openshift Web Console*.
+installation using the **Openshift Web Console**.
 
-In the *Openshift Web Console*, navigate to the *Operators* -> *OperatorHub* menu.
+In the **Openshift Web Console**, navigate to the **Operators** -> **OperatorHub** menu.
 
-.OCP OperatorHub
-image::OCS-OCP-OperatorHub.png[OCP OperatorHub]
+**OCP OperatorHub**
 
-Now type `openshift container storage` in the *Filter by _keyword..._* box.
+![OCP OperatorHub](OCS-OCP-OperatorHub.png)
 
-.OCP OperatorHub filter on OpenShift Container Storage Operator
-image::OCS4-OCP-OperatorHub-Filter.png[OCP OperatorHub Filter]
+Now type `openshift container storage` in the **Filter by _keyword..._** box.
 
-Select `OpenShift Container Storage Operator` and then select *Install*.
+**OCP OperatorHub filter on OpenShift Container Storage Operator**
 
-.OCP OperatorHub Install OpenShift Container Storage
-image::OCS4-OCP4-OperatorHub-Install.png[OCP OperatorHub Install]
+![OCP OperatorHub Filter](OCS4-OCP-OperatorHub-Filter.png)
+
+Select `OpenShift Container Storage Operator` and then select **Install**.
+
+**OCP OperatorHub Install OpenShift Container Storage**
+
+![OCP OperatorHub Install](OCS4-OCP4-OperatorHub-Install.png)
 
 On the next screen make sure the settings are as shown in this figure.
 
-.OCP Subscribe to OpenShift Container Storage
-image::OCS4-OCP4-OperatorHub-Subscribe.png[OCP OperatorHub Subscribe]
+**OCP Subscribe to OpenShift Container Storage**
+
+![OCP OperatorHub Subscribe](OCS4-OCP4-OperatorHub-Subscribe.png)
 
 Click `Install`.
 
 Now you can go back to your terminal window to check the progress of the
 installation.
 
-[source,role="execute"]
-----
+```shell
 oc -n openshift-storage get csv
-----
-.Example output:
-----
+```
+**Example output:**
+
+```shell
 NAME                  DISPLAY                       VERSION   REPLACES   PHASE
 ocs-operator.v4.6.0   OpenShift Container Storage   4.6.0                Succeeded
-----
+```
 
-.Please wait until the operator `PHASE` changes to `Succeeded`
-CAUTION: This will mark that the installation of your operator was successful. Reaching this state can take several minutes.
+**Please wait until the operator `PHASE` changes to `Succeeded`**
+
+**🔥 CAUTION**\
+This will mark that the installation of your operator was successful. Reaching this state can take several minutes.
 
 You will now also see new operator pods in `openshift-storage` namespace:
 
-[source,role="execute"]
-----
+```shell
 oc -n openshift-storage get pods
-----
-.Example output:
-----
+```
+**Example output:**
+
+```shell
 NAME                                    READY   STATUS    RESTARTS   AGE
 noobaa-operator-88798865f-hlwtt         1/1     Running   0          6m57s
 ocs-metrics-exporter-5495fd48b9-xzxpm   1/1     Running   0          6m57s
 ocs-operator-6fcc5f798f-gdkrx           1/1     Running   0          6m57s
 rook-ceph-operator-8659478f5-qhghs      1/1     Running   0          6m57s
-----
+```
 
-Now switch back to your *Openshift Web Console* for the remainder of the
+Now switch back to your **Openshift Web Console** for the remainder of the
 installation for OCS 4.
 
 Select `View Operator` in figure below to get to the OCS configuration screen.
 
-.View Operator in openshift-storage namespace
-image::OCS4-OCP4-View-Operator.png[View Operator in openshift-storage namespacee]
+**View Operator in openshift-storage namespace**
 
-.OCS configuration screen
-image::OCS4-OCP4-config-screen-all.png[OCS configuration screen]
+![View Operator in openshift-storage namespacee](OCS4-OCP4-View-Operator.png)
+
+**OCS configuration screen**
+
+![OCS configuration screen](OCS4-OCP4-config-screen-all.png)
 
 On the top of the OCS configuration screen, scroll over to the right and click
 on `Storage Cluster` and then click on `Create Storage Cluster` to the far
 right. If you do not see `Create Storage Cluster` refresh your browser window.
 
-.Create Storage Cluster
-image::OCS4-OCP4-config-screen-storage-cluster.png[Create Storage Cluster]
+**Create Storage Cluster**
+
+![Create Storage Cluster](OCS4-OCP4-config-screen-storage-cluster.png)
 
 The `Create Storage Cluster` screen will display.
 
-.Create Storage Cluster default settings
-image::OCS4-config-screen-partial1.png[Create Storage Cluster default settings]
+**Create Storage Cluster default settings**
+
+![Create Storage Cluster default settings](OCS4-config-screen-partial1.png)
 
 Leave the default selection of `Internal`, `gp2`, `2 TiB` and Encryption `Disabled`.
 
-.Create a new storage cluster
-image::ocs-nodes.png[Create a new storage cluster]
+**Create a new storage cluster**
+
+![Create a new storage cluster](ocs-nodes.png)
 
 There should be 3 worker nodes already selected that had the OCS label
 applied in the last section. Execute command below and make sure they are all
 selected.
 
-[source,role="execute"]
-----
+```shell
 oc get nodes --show-labels | grep ocs |cut -d' ' -f1
-----
+```
 
 Then click on the button `Create` below the dialog box with the 3 workers
 selected with a `checkmark`.
 
-You can watch the deployment using the *Openshift Web Console* by going
+You can watch the deployment using the **Openshift Web Console** by going
 back to the `Openshift Container Storage Operator` screen and selecting `All
 instances`.
 
-Please wait until all *Pods* are marked as `Running` in the CLI or until you
+Please wait until all **Pods** are marked as `Running` in the CLI or until you
 see all instances shown below as `Ready` Status in the Web Console as shown in the following diagram:
 
-.OCS instance overview after cluster install is finished
-image::OCS4-OCP4-finished-cluster-install.png[OCS instance overview after cluster install is finished]
+**OCS instance overview after cluster install is finished**
 
-[source,role="execute"]
-----
+![OCS instance overview after cluster install is finished](OCS4-OCP4-finished-cluster-install.png)
+
+```shell
 oc -n openshift-storage get pods
-----
-.Output when the cluster installation is finished
-----
+```
+**Output when the cluster installation is finished**
+
+```shell
 NAME                                                              READY   STATUS      RESTART
 S   AGE
 csi-cephfsplugin-875xd                                            3/3     Running     0
@@ -499,7 +504,7 @@ rook-ceph-osd-prepare-ocs-deviceset-gp2-1-data-0-nnmpv-z8vq6      0/1     Comple
     20m
 rook-ceph-osd-prepare-ocs-deviceset-gp2-2-data-0-mtbtj-xrj2n      0/1     Completed   0
     20m
-----
+```
 
 The great thing about operators and OpenShift is that the operator has the
 intelligence about the deployed components built-in. And, because of the
@@ -508,109 +513,108 @@ status by looking at the `CustomResource` itself. When you went therough the UI
 dialogs, ultimately in the back-end an instance of a `StorageCluster` was
 created:
 
-[source,role="execute"]
-----
+```shell
 oc get storagecluster -n openshift-storage
-----
-.Output when the cluster installation is finished
-----
+```
+**Output when the cluster installation is finished**
+
+```shell
 NAME                          PROVISIONER                             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
 gp2 (default)                 kubernetes.io/aws-ebs                   Delete          WaitForFirstConsumer   true                   107m
 gp2-csi                       ebs.csi.aws.com                         Delete          WaitForFirstConsumer   true                   107m
 ocs-storagecluster-ceph-rbd   openshift-storage.rbd.csi.ceph.com      Delete          Immediate              true                   40m
 ocs-storagecluster-cephfs     openshift-storage.cephfs.csi.ceph.com   Delete          Immediate              true                   40m
 openshift-storage.noobaa.io   openshift-storage.noobaa.io/obc         Delete          Immediate              false                  34m
-----
+```
 
 You can check the status of the storage cluster with the following:
 
-[source,role="execute"]
-----
+```shell
 oc get storagecluster -n openshift-storage ocs-storagecluster -o jsonpath='{.status.phase}{"\n"}'
-----
+```
 
 If it says `Ready`, you can continue.
 
-### Getting to know the Storage Dashboards
+<mark>#</mark> Getting to know the Storage Dashboards
 
 You can now also check the status of your storage cluster with the OCS specific
-*Dashboards* that are included in your *Openshift Web Console*. You can reach
+**Dashboards** that are included in your **Openshift Web Console**. You can reach
 this by clicking on `Overview` on your left navigation bar, then selecting
 `Persistent Storage` on the top navigation bar of the content page.
 
-.Location of OCS Dashboards
-image::OCS4-OCP4-Overview-Location.png[Location of OCS Dashboards]
+**Location of OCS Dashboards**
 
-NOTE: If you just finished your OCS 4 deployment it could take 5-10 minutes
-for your *Dashboards* to fully populate. Different versions of OCP 4 may have minor differences in *Dashboard* sections and naming of *Dashboards*.
+![Location of OCS Dashboards](OCS4-OCP4-Overview-Location.png)
 
-.Storage Dashboard after successful storage installation
-image::OCS-dashboard-healthy.png[Storage Dashboard after successful storage installation]
+**📌 NOTE**\
+If you just finished your OCS 4 deployment it could take 5-10 minutes
+for your **Dashboards** to fully populate. Different versions of OCP 4 may have minor differences in **Dashboard** sections and naming of **Dashboards**.
 
-[cols="0,1,10a"]
-|===
-| *1* | Health | Quick overview of the general health of the storage cluster
-| *2* | Details | Overview of the deployed storage cluster version and backend provider
-| *3* | Inventory | List of all the resources that are used and offered by the storage system
-| *4* | Events | Live overview of all the changes that are being done affecting the storage cluster
-| *5* | Utilization | Overview of the storage cluster usage and performance
-|===
+**Storage Dashboard after successful storage installation**
 
-OCS ships with a *Dashboard* for the Object Store service as well. From the *Overview* click on the `Object Service` on the top
+![Storage Dashboard after successful storage installation](OCS-dashboard-healthy.png)
+
+|     |     |     |
+| --- | --- | --- |
+| **1** | Health | Quick overview of the general health of the storage cluster |
+| **2** | Details | Overview of the deployed storage cluster version and backend provider |
+| **3** | Inventory | List of all the resources that are used and offered by the storage system |
+| **4** | Events | Live overview of all the changes that are being done affecting the storage cluster |
+| **5** | Utilization | Overview of the storage cluster usage and performance |
+
+OCS ships with a **Dashboard** for the Object Store service as well. From the **Overview** click on the `Object Service` on the top
 navigation bar of the content page.
 
-.OCS Multi-Cloud-Gateway Dashboard after successful installation
-image::OCS-noobaa-dashboard-healthy.png[OCS Multi-Cloud-Gateway Dashboard after successful installation]
+**OCS Multi-Cloud-Gateway Dashboard after successful installation**
 
-[cols="0,1,10a"]
-|===
-| *1* | Health | Quick overview of the general health of the Multi-Cloud-Gateway
-| *2* | Details | Overview of the deployed MCG version and backend provider including a link to the MCG Console
-| *3* | Buckets | List of all the ObjectBucket with are offered and ObjectBucketClaims which are connected to them
-| *4* | Resource Providers | Shows the list of configured Resource Providers that are available as backing storage in the MCG
-| *5* | Counters | Shows the current numbers of reads and writes issued against each provider
-| *6* | Events | Live overview of all the changes that are being done affecting the MCG
-|===
+![OCS Multi-Cloud-Gateway Dashboard after successful installation](OCS-noobaa-dashboard-healthy.png)
 
-// On the left side of this *Dashboard* you see a blue link labelled `noobaa`, which will get you to the NooBaa Management Console. We will discuss this Management Console later in more detail.
+|     |     |     |
+| --- | --- | --- |
+| **1** | Health | Quick overview of the general health of the Multi-Cloud-Gateway |
+| **2** | Details | Overview of the deployed MCG version and backend provider including a link to the MCG Console |
+| **3** | Buckets | List of all the ObjectBucket with are offered and ObjectBucketClaims which are connected to them |
+| **4** | Resource Providers | Shows the list of configured Resource Providers that are available as backing storage in the MCG |
+| **5** | Counters | Shows the current numbers of reads and writes issued against each provider |
+| **6** | Events | Live overview of all the changes that are being done affecting the MCG |
 
 Once this is all healthy, you will be able to use the three new
-*StorageClasses* created during the OCS 4 Install:
+**StorageClasses** created during the OCS 4 Install:
 
-- ocs-storagecluster-ceph-rbd
-- ocs-storagecluster-cephfs
-- openshift-storage.noobaa.io
+* ocs-storagecluster-ceph-rbd
+* ocs-storagecluster-cephfs
+* openshift-storage.noobaa.io
 
-You can see these three *StorageClasses* from the Openshift Web Console by
+You can see these three **StorageClasses** from the Openshift Web Console by
 expanding the `Storage` menu in the left navigation bar and selecting
 `Storage Classes`. You can also run the command below:
 
-[source,role="execute"]
-----
+```shell
 oc -n openshift-storage get sc
-----
+```
 
 Please make sure the three storage classes are available in your cluster
 before proceeding.
 
-NOTE: The NooBaa pod used the `ocs-storagecluster-ceph-rbd` storage class for
+**📌 NOTE**\
+The NooBaa pod used the `ocs-storagecluster-ceph-rbd` storage class for
 creating a PVC for mounting to the `db` container.
 
-=== Using the Rook-Ceph toolbox to check on the Ceph backing storage
+### Using the Rook-Ceph toolbox to check on the Ceph backing storage
 
-Since the Rook-Ceph *toolbox* is not shipped with OCS, we need to deploy it
+Since the Rook-Ceph **toolbox** is not shipped with OCS, we need to deploy it
 manually.
 
 You can patch the `OCSInitialization ocsinit` using the following command line:
 
-[source,role="execute"]
-----
+```shell
 oc patch OCSInitialization ocsinit -n openshift-storage --type json --patch  '[{ "op": "replace", "path": "/spec/enableCephTools", "value": true }]'
 TOOLS_POD=$(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name)
 oc rsh -n openshift-storage pod/$TOOLS_POD ceph df
-----
-.Example output
-----
+```
+**Example output**
+
+```shell
 RAW STORAGE:
     CLASS     SIZE      AVAIL       USED        RAW USED     %RAW USED 
     ssd       6 TiB     6.0 TiB     101 MiB      3.1 GiB          0.05 
@@ -621,21 +625,20 @@ POOLS:
     ocs-storagecluster-cephblockpool                1      33 MiB          63     100 MiB         0       1.7 TiB 
     ocs-storagecluster-cephfilesystem-metadata      2     2.2 KiB          22      96 KiB         0       1.7 TiB 
     ocs-storagecluster-cephfilesystem-data0         3         0 B           0         0 B         0       1.7 TiB 
-----
+```
 
 Finally, we are ready to move the monitoring applications to the infra nodes as well. This will enble us to free up resources for applications running on worker nodes. Ultimately this will incur us into minimizing the number of entitlements necessary to keep the cluster up and running.
 
-[source,role="execute"]
-----
+```shell
 oc apply -f https://raw.githubusercontent.com/mikelo/mikelo.github.io/master/ocs/cluster-monitoring-configmap.storage.yaml
-----
+```
 Monitor the status of the newly applied configuration:
-[source,role="execute"]
-----
+```shell
 oc get pod -o wide
-----
-.Example output:
-----
+```
+**Example output:**
+
+```shell
 NAME                                           READY   STATUS    RESTARTS   AGE     IP             NODE                                            NOMINATED NODE   READINESS GATES
 alertmanager-main-0                            5/5     Running   0          42s     10.128.4.13    ip-10-0-223-56.eu-central-1.compute.internal    <none>           <none>
 alertmanager-main-1                            5/5     Running   0          69s     10.130.2.14    ip-10-0-189-227.eu-central-1.compute.internal   <none>           <none>
@@ -661,9 +664,9 @@ prometheus-operator-d4b8885b9-h6x9b            2/2     Running   0          99s 
 telemeter-client-769bccbc99-t7fsl              3/3     Running   0          96s     10.131.2.19    ip-10-0-139-155.eu-central-1.compute.internal   <none>           <none>
 thanos-querier-bf7898547-r8gjd                 5/5     Running   0          6h20m   10.129.2.4     ip-10-0-129-227.eu-central-1.compute.internal   <none>           <none>
 thanos-querier-bf7898547-rk7cd                 5/5     Running   0          6h20m   10.131.0.10    ip-10-0-166-96.eu-central-1.compute.internal    <none>
-----
+```
 
-Note that pods are starting to gradually move to the infra nodes. Each monitoring component has tainted elements built inside of them, here's a snippet for one of them:
+Note that pods are starting to gradually move to the infra nodes. Each monitoring component has tainted elements built inside of them, here’s a snippet for one of them:
 
 ```yaml
     prometheusK8s:
@@ -678,40 +681,39 @@ Note that pods are starting to gradually move to the infra nodes. Each monitorin
         effect: NoSchedule
 ```
 
-== Test an OCP application deployment using a CephFS volume
+## Test an OCP application deployment using a CephFS volume
 
-In this section the `ocs-storagecluster-cephfs` *StorageClass* will be used
-by an OCP application and a database *Deployment* to create an RWO (ReadWriteOnce)
+In this section the `ocs-storagecluster-cephfs` **StorageClass** will be used
+by an OCP application and a database **Deployment** to create an RWO (ReadWriteOnce)
 persistent storage. 
 
 We are following this blog here
 
 `https://www.redhat.com/en/blog/mysql-openshift-container-storage-performance-and-failover-under-heavy-load`
 
-NOTE: we added a few twearks to the YAML file and the testing scripts to make it work for our cluster
+**📌 NOTE**\
+we added a few twearks to the YAML file and the testing scripts to make it work for our cluster
 
 Start by creating a new project:
 
-[source,role="execute"]
-----
+```shell
 oc new-project sysbench
-----
+```
 
 Then use the `MySQL/sysbench` YAML to create the new StatefulSet.
 
-[source,role="execute"]
-----
+```shell
 oc apply -f https://raw.githubusercontent.com/mikelo/mikelo.github.io/master/ocs/OCS-FS-STS.yaml
-----
+```
 
 Check that the PVC is created.
 
-[source,role="execute"]
-----
+```shell
 oc get pvc
-----
-.Example output:
-----
+```
+**Example output:**
+
+```shell
 NAME                                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                AGE
 mysql-ocs-fs-data-mysql-ocs-fs-0    Bound    pvc-0194b560-1593-4ae7-a527-9331e35e28c1   15Gi       RWO            ocs-storagecluster-cephfs   21s
 mysql-ocs-fs-data-mysql-ocs-fs-1    Bound    pvc-c76a39da-40de-4b07-a836-7e20a15fb565   15Gi       RWO            ocs-storagecluster-cephfs   20s
@@ -733,17 +735,17 @@ mysql-ocs-fs-data-mysql-ocs-fs-6    Bound    pvc-c6037407-1bc1-46cb-8605-50351b4
 mysql-ocs-fs-data-mysql-ocs-fs-7    Bound    pvc-c5106001-76f0-42d4-b864-9e667f234bb7   15Gi       RWO            ocs-storagecluster-cephfs   20s
 mysql-ocs-fs-data-mysql-ocs-fs-8    Bound    pvc-307b0056-3039-4752-9295-f871f9298f38   15Gi       RWO            ocs-storagecluster-cephfs   20s
 mysql-ocs-fs-data-mysql-ocs-fs-9    Bound    pvc-e855f29c-99a8-43b2-bb6e-c46c4f730c48   15Gi       RWO            ocs-storagecluster-cephfs   20s
-----
+```
 
-This step could take 5 or more minutes. Wait until there are 2 *Pods* in
-`Running` STATUS and 4 *Pods* in `Completed` STATUS as shown below.
+This step could take 5 or more minutes. Wait until there are 2 **Pods** in
+`Running` STATUS and 4 **Pods** in `Completed` STATUS as shown below.
 
-[source,role="execute"]
-----
+```shell
 oc get pods
-----
-.Example output:
-----
+```
+**Example output:**
+
+```shell
 NAME              READY   STATUS    RESTARTS   AGE
 mysql-ocs-fs-0    2/2     Running   0          3m40s
 mysql-ocs-fs-1    2/2     Running   0          3m40s
@@ -766,15 +768,15 @@ mysql-ocs-fs-7    2/2     Running   0          3m40s
 mysql-ocs-fs-8    2/2     Running   0          3m40s
 mysql-ocs-fs-9    2/2     Running   0          3m40s
 
-----
+```
 Once the deployment is complete you can now test the application and the persistent storage on Ceph.
 
-[source,role="execute"]
-----
+```shell
 for pod in $(oc get pods|grep mysql|awk '{print $1}');do echo "pod $pod";oc rsh -c mysql-ocs-fs mysql-ocs-fs-9 mysql -uroot -ppassword -h localhost sysbench -e "SELECT count(1) from sbtest10;";done
-----
-.Example output:
-----
+```
+**Example output:**
+
+```shell
 pod mysql-ocs-fs-0
 mysql: [Warning] Using a password on the command line interface can be insecure.
 +----------+
@@ -789,16 +791,15 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 +----------+
 |  1000000 |
 +----------+
-----
-We're now going to check again that our storage is actually being used as expected:
-// You can exit by pressing kbd:[Ctrl+C].
-[source,role="execute"]
-----
+```
+We’re now going to check again that our storage is actually being used as expected:
+```shell
 TOOLS_POD=$(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name)
 oc rsh -n openshift-storage pod/$TOOLS_POD ceph df
-----
-.Example output
-----
+```
+**Example output**
+
+```shell
 RAW STORAGE:
     CLASS     SIZE	AVAIL       USED       RAW USED     %RAW USED
     ssd       6 TiB     5.9 TiB     88 GiB	 91 GiB          1.49
@@ -809,6 +810,8 @@ POOLS:
     ocs-storagecluster-cephblockpool                1	   57 MiB          68     170 MiB         0	  1.7 TiB
     ocs-storagecluster-cephfilesystem-metadata      2     191 MiB         213     572 MiB      0.01	  1.7 TiB
     ocs-storagecluster-cephfilesystem-data0         3	   29 GiB      13.17k	   88 GiB      1.68	  1.7 TiB
-----
+```
 
 This guide ends here. It is intentionally been kept short in order to have simple and quick end-to-end steps to get a working OCS solution running.
+
+[back](./)
