@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-Hi folks! nice to meet your by the way. I was looking for a way to write site using markdown that would also work with github-pages and I stumbled upon this nifty "Jekyll hacker theme" which is **precisely** what I was looking for. Read all about in the [README](./README.html) file!
+Hi folks! nice to meet your by the way. I was looking for a way to write site using markdown that would also work with github-pages and I stumbled upon this nifty "Jekyll hacker theme" which is **precisely** what I was looking for. Read all about   [it](https://pages-themes.github.io/hacker/)
 
 
 # Connect with Me 🌐
