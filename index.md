@@ -11,17 +11,20 @@ Hi folks! nice to meet your by the way. I was looking for a way to write site us
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mikelo)
 [![GitLab](https://img.shields.io/badge/GitLab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white)](https://gitlab.com/mik3lo)
 
+# The [CV](resume.html) (aka resumé)
+
+# The Blog
+
 <ul>
   {% for post in site.posts %}
     <li>
       <a href="{{ post.url }}">{{ post.title }}</a>
+      {{ post.excerpt }}
     </li>
   {% endfor %}
 </ul>
 
-Text can be **bold**, _italic_, ~~strikethrough~~ or `keyword`.
-
-[Link](./ocs.html) to OCS article.
+<!-- Text can be **bold**, _italic_, ~~strikethrough~~ or `keyword`. -->
 
 There should be whitespace between paragraphs.
 
