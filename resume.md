@@ -2,17 +2,17 @@
 layout: default
 ---
 
-# Michele Orlandi
+<!-- # Michele Orlandi -->
 **Distributed Systems Engineer**
 
-- 📧 michele.orlandi@gmail.com
+<!-- - 📧 michele.orlandi@gmail.com
 - 📞 
 - 🌐 []()
-- 📍 , IT
+- 📍 , IT -->
 
-### Profiles
+<!-- ### Profiles
 - [LinkedIn](https://www.linkedin.com/in/micheleorlandi/): micheleorlandi
-- [Twitter](https://twitter.com/mik3llo): mik3llo
+- [Twitter](https://twitter.com/mik3llo): mik3llo -->
 
 ## Work Experience
 ### Distributed Systems Architect
