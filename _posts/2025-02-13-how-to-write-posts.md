@@ -17,7 +17,7 @@ title:  "Writing posts with Jekyll!"
 ---
 ```
 
-Back in the index.md I simply added an embeded html snippet, which automagically added posts as I add them! pretty cool, eh?
+Back in the index.md I simply added an embeded html snippet, which automagically updated posts as I add them! pretty cool, eh?
 
 ```html
 {% raw %}
