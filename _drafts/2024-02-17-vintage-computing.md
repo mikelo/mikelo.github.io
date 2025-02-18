@@ -14,3 +14,7 @@ https://amiga.oszx.co/
 https://www.windows93.net/
 
 https://winxp.vercel.app/
+
+https://princejs.com/
+
+https://github.com/jmechner/Prince-of-Persia-Apple-II
