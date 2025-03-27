@@ -53,3 +53,8 @@ aws iam attach-user-policy \
 
 echo "AccessKeyId: `cat $SCRATCH/aws-access-key.json | jq -r '.AccessKey.AccessKeyId'`"
 echo "SecretAccessKey: `cat $SCRATCH/aws-access-key.json | jq -r '.AccessKey.SecretAccessKey'`" 
+
+AWS_ID=`cat $SCRATCH/aws-access-key.json | jq -r '.AccessKey.AccessKeyId'`
+AWS_KEY=`cat $SCRATCH/aws-access-key.json | jq -r '.AccessKey.SecretAccessKey'`
+
+minijinja-cli --env cw-forwarder.yaml | oc apply -f -

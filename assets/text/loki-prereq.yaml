@@ -1,11 +1,3 @@
-# Deploys a new Namespace for the MinIO Pod
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: minio # Change this value if you want a different namespace name
-  labels:
-    name: minio # Change this value to match metadata.name
----
 # Deploys a new MinIO Pod into the metadata.namespace Kubernetes namespace
 #
 # The `spec.containers[0].args` contains the command run on the pod
@@ -15,6 +7,7 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: openshift-logging
   name: minio
   labels:
     app: minio
@@ -50,6 +43,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: openshift-logging
   name: minio
   labels:
     app: minio
@@ -64,3 +58,36 @@ spec:
       targetPort: 9090
   selector:
     app: minio
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    # operators.coreos.com/loki-operator.openshift-operators-redhat: ""
+  name: loki-operator
+  # namespace: openshift-operators-redhat
+  namespace: openshift-operators
+spec:
+  channel: stable-6.2
+  installPlanApproval: Automatic
+  name: loki-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: loki-operator.v6.2.0
+---  
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    # operators.coreos.com/cluster-observability-operator.openshift-cluster-observability: ""
+  name: cluster-observability-operator
+  # namespace: openshift-cluster-observability-operator
+  namespace: openshift-operators
+
+spec:
+  channel: stable
+  installPlanApproval: Automatic
+  name: cluster-observability-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: cluster-observability-operator.v1.0.0
